@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <!--
+        项目安全配置
+    -->
+    <!--<debug/>-->
+
+    <!--
+        静态资源直接忽略安全
+    -->
+    <!--static url pattern-->
+    <http pattern="/resources/**" security="none"/>
+
+
+    <http pattern="/**" auto-config="true" authentication-manager-ref="authenticationManager"
+          use-expressions="true">
+        <custom-filter ref="hibernateSessionFilter" position="FIRST"/>
+        <intercept-url pattern="/" access="permitAll"/>
+        <intercept-url pattern="/code" access="permitAll"/>
+        <intercept-url pattern="/tos" access="permitAll"/>
+        <intercept-url pattern="/auth/login" access="permitAll"/>
+        <intercept-url pattern="/auth/register" access="permitAll"/>
+        <intercept-url pattern="/test/*" access="permitAll"/>
+        <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+        <remember-me key="reemember-me"/>
+        <form-login login-page="/auth/login" login-processing-url="/auth/doLogin"/>
+        <logout logout-success-url="/" logout-url="/auth/logout" delete-cookies="JSESSIONID"/>
+
+        <access-denied-handler error-page="/auth/login"/>
+    </http>
+
+    <beans:bean id="hibernateSessionFilter" class="cc.cicadabear.web.context.HibernateSessionFilter"/>
+
+    <authentication-manager id="authenticationManager">
+        <authentication-provider user-service-ref="userService">
+            <password-encoder hash="md5"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <!--security holder-->
+    <beans:bean id="springSecurityHolder" class="cc.cicadabear.web.context.SpringSecurityHolder"/>
+
+    <beans:bean class="cc.cicadabear.common.util.SecurityUtils">
+        <beans:property name="securityHolder" ref="springSecurityHolder"/>
+    </beans:bean>
+
+    <global-method-security secured-annotations="enabled"/>
+
+
+</beans:beans>
