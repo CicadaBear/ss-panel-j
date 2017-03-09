@@ -17,6 +17,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -104,27 +105,24 @@ public class AuthController {
 
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register() {
-
+    public String register(String code, Model model) {
+        if (StringUtils.isNotEmpty(code)) {
+            model.addAttribute("code", code);
+        }
         return "auth/register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ResponseBody
     public ResultVo doRegister(UserRegisterDto registerDto, BindingResult br) {
         ResultVo resultVo = new ResultVo();
-
         registerDtoValidator.validate(registerDto, br);
-
         if (br.hasErrors()) {
             resultVo.fail(br.getAllErrors().get(0).getDefaultMessage());
             return resultVo;
         }
-
-
-
         userService.registerUser(registerDto);
-
-
+        resultVo.success("注册成功");
         return resultVo;
     }
 

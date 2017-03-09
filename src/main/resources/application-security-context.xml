@@ -20,7 +20,7 @@
 
     <http pattern="/**" auto-config="true" authentication-manager-ref="authenticationManager"
           use-expressions="true">
-        <custom-filter ref="hibernateSessionFilter" position="FIRST"/>
+        <custom-filter ref="FirstFilter" position="FIRST"/>
         <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/code" access="permitAll"/>
         <intercept-url pattern="/tos" access="permitAll"/>
@@ -30,14 +30,14 @@
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
-        <remember-me key="reemember-me"/>
+        <remember-me key="reemember_me"/>
         <form-login login-page="/auth/login" login-processing-url="/auth/doLogin"/>
-        <logout logout-success-url="/" logout-url="/auth/logout" delete-cookies="JSESSIONID"/>
+        <logout logout-success-url="/" logout-url="/user/logout" delete-cookies="JSESSIONID"/>
 
         <access-denied-handler error-page="/auth/login"/>
     </http>
 
-    <beans:bean id="hibernateSessionFilter" class="cc.cicadabear.web.context.HibernateSessionFilter"/>
+    <beans:bean id="FirstFilter" class="cc.cicadabear.web.context.FirstFilter"/>
 
     <authentication-manager id="authenticationManager">
         <authentication-provider user-service-ref="userService">

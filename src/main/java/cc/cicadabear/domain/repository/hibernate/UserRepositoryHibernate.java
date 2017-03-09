@@ -4,6 +4,7 @@ import cc.cicadabear.common.hibernate.queryhelper.impl.ListUsersQueryHelper;
 import cc.cicadabear.domain.entity.User;
 import cc.cicadabear.domain.repository.UserRepository;
 import com.google.common.collect.ImmutableMap;
+import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -56,7 +57,13 @@ public class UserRepositoryHibernate extends AbstractRepositoryHibernate<User> i
 
     @Override
     public int findLastPort() {
-        final User user = findOne("from User u order by id desc ", null);
-        return user == null ? 1024 : user.getPort();
+//        final User user = findOne("from User u order by id desc ", null);
+////        return user == null ? 1024 : user.getPort();
+        return ((Number) session().createCriteria(User.class).setProjection(Projections.max("port")).uniqueResult()).intValue();
+    }
+
+    @Override
+    public int findCount() {
+        return ((Number) session().createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult()).intValue();
     }
 }

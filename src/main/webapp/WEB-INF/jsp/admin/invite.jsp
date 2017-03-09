@@ -1,4 +1,5 @@
-{include file='admin/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="main.jsp" %>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -41,7 +42,7 @@
                                 <label for="cate_title" class="col-sm-3 control-label">邀请码前缀</label>
 
                                 <div class="col-sm-9">
-                                    <input class="form-control" id="prefix" placeholder="小于8个字符">
+                                    <input class="form-control" id="prefix" placeholder="小于8个字符" disabled>
                                 </div>
                             </div>
 
@@ -76,7 +77,7 @@
                         <h3 class="box-title">注意</h3>
                     </div>
                     <div class="box-footer">
-                        <p>公共邀请码（类别为0的邀请码）请<a href="/error_code">在这里查看</a>。</p>
+                        <p>公共邀请码（类别为0的邀请码）请<a href="/code">在这里查看</a>。</p>
                     </div>
                 </div>
             </div>
@@ -85,7 +86,8 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-</div><!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 <script>
     $(document).ready(function () {
@@ -115,4 +117,4 @@
     })
 </script>
 
-{include file='admin/footer.tpl'}
+<%@ include file="footer.jsp" %>

@@ -1,6 +1,12 @@
 package cc.cicadabear.domain.entity;
 
+import cc.cicadabear.common.util.DateUtils;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -11,10 +17,11 @@ import java.util.Date;
 public class InviteCode extends AbstractEntity {
 
     @Column(name = "code")
-    private String Code;
+    private String code;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+//    @NotFound(action = NotFoundAction.IGNORE)
     private User creator;
 
     @Column(name = "created_at")
@@ -23,12 +30,22 @@ public class InviteCode extends AbstractEntity {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    public InviteCode() {
+
+    }
+
+    public InviteCode(String code) {
+        this.code = code;
+        createdAt = DateUtils.now();
+        updatedAt = createdAt;
+    }
+
     public String getCode() {
-        return Code;
+        return code;
     }
 
     public void setCode(String code) {
-        Code = code;
+        this.code = code;
     }
 
     public User getCreator() {

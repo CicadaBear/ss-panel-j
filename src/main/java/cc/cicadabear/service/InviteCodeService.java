@@ -17,4 +17,8 @@ public interface InviteCodeService {
     boolean isExistByNo(String code);
 
     List<InviteCode> loadCodesByUser(int userId);
+
+    void generateInviteCodes(User user, int num);
+
+    void generateAdminInviteCodes(int uid, int num);
 }

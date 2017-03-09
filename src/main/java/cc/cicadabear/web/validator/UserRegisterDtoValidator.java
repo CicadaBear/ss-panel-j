@@ -23,10 +23,6 @@ public class UserRegisterDtoValidator implements Validator {
     @Autowired
     private InviteCodeService inviteCodeService;
 
-    @Autowired
-    private PasswordValidator passwordValidator;
-
-
     @Override
     public boolean supports(Class<?> aClass) {
         return UserRegisterDto.class.equals(aClass);
@@ -38,7 +34,7 @@ public class UserRegisterDtoValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", null, "邮箱不能为空");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", null, "用户名不能为空");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", null, "用户名不能为空");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", null, "密码不能为空");
 
@@ -51,7 +47,7 @@ public class UserRegisterDtoValidator implements Validator {
 
         if (errors.hasErrors()) return;
 
-        passwordValidator.validate(formDto, errors);
+        validatePassword(formDto, errors);
 
         if (errors.hasErrors()) return;
 
@@ -76,8 +72,17 @@ public class UserRegisterDtoValidator implements Validator {
         if (!inviteCodeService.isExistByNo(dto.getCode())) {
             errors.rejectValue("code", null, "邀请码无效");
         }
-
     }
 
-
+    protected void validatePassword(UserRegisterDto dto, Errors errors) {
+        String password = dto.getPassword();
+        String rePassword = dto.getRePassword();
+        if (password == null || password.length() < 6) {
+            errors.rejectValue("passwd", null, "密码长度 >= 6");
+            return;
+        }
+        if (!password.equals(rePassword)) {
+            errors.rejectValue("repasswd", null, "两数输入密码不同");
+        }
+    }
 }

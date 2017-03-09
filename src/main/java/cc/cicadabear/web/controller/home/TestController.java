@@ -1,9 +1,11 @@
 package cc.cicadabear.web.controller.home;
 
+import cc.cicadabear.common.util.BandwidthUtils;
 import cc.cicadabear.common.util.SecurityUtils;
 import cc.cicadabear.common.util.ThreadLocalHolder;
 import cc.cicadabear.domain.entity.User;
 import cc.cicadabear.service.UserService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -36,38 +38,50 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping("/test")
-    public String test() {
+    public String test() throws IOException {
         logger.debug("test/test===========");
         ServletOutputStream stream = null;
 
-        try {
-            stream = ThreadLocalHolder.getResponse().getOutputStream();
-            stream.println("session:" + ThreadLocalHolder.getRequest().getSession().getId());
-            User user = SecurityUtils.currentUser();
-//            User user = userService.loadUserByID(1);
+        stream = ThreadLocalHolder.getResponse().getOutputStream();
+        stream.println("session:" + ThreadLocalHolder.getRequest().getSession().getId());
+//            User user = SecurityUtils.currentUser();
+        User user = userService.loadUserByID(1);
 
-            stream.println(user == null);
-            stream.println(user.email());
+        stream.println(user == null);
+        stream.println(user.email());
 
 //            Session session = sessionFactory.getCurrentSession();
-            Session session = ThreadLocalHolder.getSession();
+//            Session session = ThreadLocalHolder.getSession();
 
-            stream.println(session.isOpen());
+//            stream.println(session.isOpen());
 
-            logger.debug("====================" + String.valueOf(Thread.currentThread().getId()) + "====" + session.hashCode());
+//            logger.debug("====================" + String.valueOf(Thread.currentThread().getId()) + "====" + session.hashCode());
 
 
-            stream.println(user.getInviteCodes() == null);
+//            stream.println(user.getInviteCodes() == null);
+//
+//            stream.println(user.getInviteCodes().size());
+//            stream.println(user.getInvitees().size());
+//
+//            stream.println(user.getInviter() == null);
+        stream.println(RandomStringUtils.randomAlphanumeric(32));
 
-            stream.println(user.getInviteCodes().size());
-            stream.println(user.getInvitees().size());
+        stream.println(BandwidthUtils.flowAutoShow(0));
+        stream.println(BandwidthUtils.flowAutoShow(1));
+        stream.println(BandwidthUtils.flowAutoShow(1024 * 1024));
 
-            stream.println(user.getInviter() == null);
+        stream.flush();
 
-            stream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+////        User user = SecurityUtils.currentUser();
+//        user = userService.loadUserByID(1);
+//        user.setUsername("admin1234");
+//        userService.saveOrUpdate(user);
+////        ThreadLocalHolder.getSession().flush();
+//        System.out.println("==================" + ThreadLocalHolder.getSession().getClass());
+//        user.setUsername("admin12346");
+//        userService.saveOrUpdate(user);
+
+
         return "test";
     }
 

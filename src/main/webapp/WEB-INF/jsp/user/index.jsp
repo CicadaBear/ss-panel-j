@@ -82,11 +82,11 @@
                             <error_code>${user.lastCheckInTime()}</error_code>
                         </p>
                         <%--{if $user->isAbleToCheckin() }--%>
-                        <%--<p id="checkin-btn">--%>
-                            <%--<button id="checkin" class="btn btn-success  btn-flat">签到</button>--%>
-                        <%--</p>--%>
+                        <p id="checkin-btn">
+                            <button id="checkin" class="btn btn-success  btn-flat">签到</button>
+                        </p>
                         <%--{else}--%>
-                        <p><a class="btn btn-success btn-flat disabled" href="#">不能签到</a></p>
+                        <%--<p><a class="btn btn-success btn-flat disabled" href="#">不能签到</a></p>--%>
                         <%--{/if}--%>
                         <p id="checkin-msg"></p>
                     </div>
@@ -131,6 +131,8 @@
 <script>
     $(document).ready(function () {
         $("#checkin").click(function () {
+            alert('暂未开通');
+            return;
             $.ajax({
                 type: "POST",
                 url: "/user/checkin",
@@ -147,4 +149,4 @@
     })
 </script>
 
-<%@ include file="footer.jsp"%>
+<%@ include file="footer.jsp" %>

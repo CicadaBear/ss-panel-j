@@ -1,7 +1,9 @@
 package cc.cicadabear.common.util;
 
 import org.hibernate.Session;
+import org.springframework.context.ApplicationContext;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,10 @@ public abstract class ThreadLocalHolder {
     private static ThreadLocal<HttpServletResponse> responseThreadLocal = new ThreadLocal<>();
 
     private static ThreadLocal<Session> sessionThreadLocal = new ThreadLocal<>();
+
+    private static ThreadLocal<ServletContext> servletContextThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<ApplicationContext> applicationContextThreadLocal = new ThreadLocal<>();
+
 
     protected ThreadLocalHolder() {
     }
@@ -63,5 +69,20 @@ public abstract class ThreadLocalHolder {
         return sessionThreadLocal.get();
     }
 
+    public static void setThreadLocalServletContext(ServletContext servletContext) {
+        servletContextThreadLocal.set(servletContext);
+    }
+
+    public static ServletContext getServletContext() {
+        return servletContextThreadLocal.get();
+    }
+
+    public static void setThreadLocalApplicationContext(ApplicationContext applicationContext) {
+        applicationContextThreadLocal.set(applicationContext);
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return applicationContextThreadLocal.get();
+    }
 
 }

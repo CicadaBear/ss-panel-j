@@ -1,6 +1,5 @@
 package cc.cicadabear.domain.shared.security;
 
-import cc.cicadabear.common.util.DateUtils;
 import cc.cicadabear.domain.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,21 +30,14 @@ public class SecurityUserDetails implements UserDetails {
 
     private void initialPrivileges() {
         this.authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + "USER"));
-//        List<Privilege> privilegeList = privilegeList();
-//        for (Privilege privilege : privilegeList) {
-//            this.authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + privilege.name()));
-//        }
+        if (user.isAdmin()) {
+            this.authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + "ADMIN"));
+        }
     }
 
-//    private List<Privilege> privilegeList() {
-//        if (user.defaultUser()) {
-//            return Arrays.asList(Privilege.values());
-//        } else {
-//            final List<Privilege> privileges = user.privileges();
-//            privileges.add(Privilege.DEFAULT);
-//            return privileges;
-//        }
-//    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

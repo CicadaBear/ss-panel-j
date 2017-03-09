@@ -30,7 +30,7 @@
                         <c:forEach items="${codes}" var="code" varStatus="s">
                             <tr>
                                 <td>${code.id()}</td>
-                                <td><a href="/auth/register?error_code={$error_code->error_code}">${code.code}</a></td>
+                                <td><a href="/auth/register?code=${code.code}">${code.code}</a></td>
                                 <td>可用</td>
                             </tr>
                         </c:forEach>

@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group has-feedback">
-            <input type="text" id="error_code" value="${error_code}" class="form-control" placeholder="邀请码"/>
+            <input type="text" id="code" value="${code}" class="form-control" placeholder="邀请码"/>
             <span class="glyphicon glyphicon-send form-control-feedback"></span>
         </div>
 
@@ -100,7 +100,7 @@
                     name: $("#name").val(),
                     passwd: $("#passwd").val(),
                     repasswd: $("#repasswd").val(),
-                    error_code: $("#error_code").val(),
+                    code: $("#code").val(),
                     verifycode: $("#verifycode").val(),
                     agree: $("#agree").val()
                 },

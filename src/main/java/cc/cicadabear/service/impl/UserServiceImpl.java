@@ -10,6 +10,7 @@ import cc.cicadabear.domain.dto.user.UserListDto;
 import cc.cicadabear.domain.dto.user.UserRegisterDto;
 import cc.cicadabear.domain.entity.InviteCode;
 import cc.cicadabear.domain.entity.User;
+import cc.cicadabear.domain.repository.InviteCodeRepository;
 import cc.cicadabear.domain.repository.UserRepository;
 import cc.cicadabear.domain.shared.paginated.PaginatedLoader;
 import cc.cicadabear.domain.shared.security.SecurityUserDetails;
@@ -40,6 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private InviteCodeService inviteCodeService;
+
+    @Autowired
+    private InviteCodeRepository inviteCodeRepository;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -92,6 +96,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int loadCount() {
+        return userRepository.findCount();
+    }
+
+    @Override
     public boolean isExistUsername(String username) {
         User user = userRepository.findByUsernameIgnoreArchived(username);
         return user != null;
@@ -117,20 +126,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(UserRegisterDto registerDto) {
-
         User user = registerDto.toEntity();
-
         InviteCode inviteCode = inviteCodeService.loadCodeByNo(registerDto.getCode());
         user.setInviter(inviteCode.getCreator());
         user.setPort(userRepository.findLastPort() + 1);
         user.setEnable(true);
         user.setIsAdmin(false);
-        user.setPass(RandomStringUtils.random(6));
+        user.setPass(RandomStringUtils.randomAlphanumeric(6));
         user.setTransferEnable(BandwidthUtils.toGB(JConfig.getInteger("defaultTraffic")));
         user.setInviteNum(JConfig.getInteger("inviteNum"));
         user.setRegIp(ThreadLocalHolder.clientIp());
         user.setRegDate(DateUtils.now());
         saveOrUpdate(user);
+        inviteCodeRepository.delete(inviteCodeService.loadCodeByNo(registerDto.getCode()));
     }
 
 

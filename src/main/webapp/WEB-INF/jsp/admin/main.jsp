@@ -1,25 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../taglib.jsp"%>
+<%@ include file="../taglib.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{$config["appName"]}</title>
+    <title>${fnc:getConfig("appName")}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
-    <link href="/assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctxStatic}/assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Font Awesome Icons -->
     <link href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Ionicons -->
     <link href="//cdn.bootcss.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css">
     <!-- Theme style -->
-    <link href="/assets/public/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctxStatic}/assets/public/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link href="/assets/public/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctxStatic}/assets/public/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
 
     <!-- jQuery 2.1.3 -->
-    <script src="/assets/public/js/jquery.min.js"></script>
+    <script src="${ctxStatic}/assets/public/js/jquery.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,7 +33,7 @@
 <div class="wrapper">
 
     <header class="main-header">
-        <a href="/user" class="logo">{$config["appName"]}</a>
+        <a href="/user" class="logo">${fnc:getConfig("appName")}</a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
@@ -46,18 +46,19 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- User Account: style can be found in dropdown.less -->
+                    <c:set var="user" value='${fnc:getLoginUser()}'/>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{$user->gravatar}" class="user-image" alt="User Image"/>
-                            <span class="hidden-xs">{$user->user_name}</span>
+                            <img src="${user.gravatar}" class="user-image" alt="User Image"/>
+                            <span class="hidden-xs">${user.username}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{$user->gravatar}" class="img-circle" alt="User Image"/>
+                                <img src="${user.gravatar}" class="img-circle" alt="User Image"/>
                                 <p>
-                                    {$user->email}
-                                    <small>加入时间：{$user->regDate()}</small>
+                                    ${user.email}
+                                    <small>加入时间：${user.regDateText}</small>
                                 </p>
                             </li>
                             <li class="user-footer">
@@ -84,10 +85,10 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{$user->gravatar}" class="img-circle" alt="User Image"/>
+                    <img src="${user.gravatar}" class="img-circle" alt="User Image"/>
                 </div>
                 <div class="pull-left info">
-                    <p>{$user->user_name}</p>
+                    <p>${user.username}</p>
 
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>

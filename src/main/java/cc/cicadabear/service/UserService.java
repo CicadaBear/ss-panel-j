@@ -17,6 +17,8 @@ public interface UserService extends UserDetailsService {
 
     User loadUserByID(int id);
 
+    int loadCount();
+
     boolean isExistUsername(String username);
 
     boolean isExistEmail(String email);

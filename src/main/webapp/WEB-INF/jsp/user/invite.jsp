@@ -63,14 +63,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${codes}" var="code" varStatus="s"/>
-                            <tr>
-                                <td><b>${code.id()}</b></td>
-                                <td><a href="/auth/register?error_code=${code.code}" target="_blank">${code.code}</a>
-                                </td>
-                                <td>可用</td>
-                            </tr>
-                            {/foreach}
+                            <c:forEach items="${codes}" var="code" varStatus="s">
+                                <tr>
+                                    <td><b>${code.id()}</b></td>
+                                    <td><a href="/auth/register?code=${code.code}"
+                                           target="_blank">${code.code}</a>
+                                    </td>
+                                    <td>可用</td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -124,4 +125,4 @@
     })
 </script>
 
-{include file='user/footer.tpl'}
+<%@ include file="footer.jsp" %>

@@ -43,6 +43,7 @@
     -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="hibernateManagedSession" value="true"/>
     </bean>
 
     <!--
@@ -57,10 +58,14 @@
                 <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.query.substitutions">true=1,false=0</prop>
                 <prop key="jdbc.use_scrollable_resultset">false</prop>
+                <!--<prop key="hibernate.current_session_context_class">-->
+                    <!--org.springframework.orm.hibernate4.SpringSessionContext-->
+                <!--</prop>-->
                 <prop key="hibernate.current_session_context_class">
-                    org.springframework.orm.hibernate4.SpringSessionContext
+                    cc.cicadabear.web.context.CustomSessionContext
                 </prop>
-                <!--<prop key="current_session_context_class">thread</prop>-->
+                <!--<prop key="transaction.flush_before_completion">true</prop>-->
+                <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
             </props>
         </property>
     </bean>

@@ -29,8 +29,8 @@ public class BandwidthUtils {
         } else if (bytes > KB) {
             unit = KB;
             unitText = "KB";
-        } else {
-//            return round($value, 2);
+        } else if (bytes == 0) {
+            return "0MB";
         }
         return NumberUtils.roundDf2(Double.valueOf(bytes) / unit) + unitText;
 

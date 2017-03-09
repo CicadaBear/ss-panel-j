@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="main.jsp"%>
+<%@ include file="main.jsp" %>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -19,7 +19,7 @@
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>{$sts->getTotalUser()}</h3>
+                        <h3>${sts.totalUser}</h3>
 
                         <p>总用户</p>
                     </div>
@@ -33,21 +33,22 @@
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>{$sts->getCheckinUser()}</h3>
+                        <h3>${sts.checkinUser}</h3>
 
                         <p>签到用户</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-stalker"></i>
                     </div>
-                    <a href="/admin/checkinlog" class="small-box-footer"> 签到日志 <i class="fa fa-arrow-circle-right"></i>
+                    <a href="/admin/checkinlog" class="small-box-footer" onclick="alert('暂未开放'); return false;"> 签到日志 <i
+                            class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
             </div>
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>{$sts->getOnlineUser(3600)}</h3>
+                        <h3>${sts.onlineUser}</h3>
 
                         <p>前一小时在线用户</p>
                     </div>
@@ -64,7 +65,7 @@
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>{$sts->getTotalNode()}</h3>
+                        <h3>${sts.totalNode}</h3>
 
                         <p>节点数</p>
                     </div>
@@ -78,7 +79,7 @@
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>{$sts->getTrafficUsage()}</h3>
+                        <h3>${sts.trafficUsage}</h3>
 
                         <p>产生流量</p>
                     </div>
@@ -92,7 +93,8 @@
         <!-- /.row --><!-- END PROGRESS BARS -->
     </section>
     <!-- /.content -->
-</div><!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 
-{include file='admin/footer.tpl'}
+<%@ include file="footer.jsp" %>

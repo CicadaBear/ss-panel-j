@@ -3,10 +3,14 @@ package cc.cicadabear.domain.entity;
 import cc.cicadabear.common.util.*;
 import cc.cicadabear.domain.repository.UserRepository;
 import cc.cicadabear.domain.shared.BeanProvider;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
@@ -54,10 +58,10 @@ public class User extends AbstractEntity {
     private int port;
 
     @Column(name = "protocol")
-    private String protocol;
+    private String protocol = "origin";
 
     @Column(name = "obfs")
-    private String obfs;
+    private String obfs = "plain";
 
     @Column(name = "switch", columnDefinition = "tinyint(4)")
     private int switch_;
@@ -97,15 +101,16 @@ public class User extends AbstractEntity {
     private int expireTime;
 
     @Column(name = "method")
-    private String method;
+    private String method = "rc4-md5";
 
     @Column(name = "is_email_verify")
-    private String isEmailVerify;
+    private int isEmailVerify;
 
     @Column(name = "reg_ip")
     private String regIp;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<InviteCode> inviteCodes;
 
 
@@ -332,7 +337,7 @@ public class User extends AbstractEntity {
         this.inviteNum = inviteNum;
     }
 
-    public boolean getIsAdmin() {
+    public boolean isAdmin() {
         return isAdmin == 1;
     }
 
@@ -341,10 +346,14 @@ public class User extends AbstractEntity {
     }
 
     public User getInviter() {
-        if (inviter.id() == 0) {
+        try {
+            if (inviter.id() == 0) {
+                return null;
+            }
+            return inviter;
+        } catch (ObjectNotFoundException e) {
             return null;
         }
-        return inviter;
     }
 
     public void setInviter(User inviter) {
@@ -367,12 +376,16 @@ public class User extends AbstractEntity {
         this.method = method;
     }
 
-    public String getIsEmailVerify() {
+    public int getIsEmailVerify() {
         return isEmailVerify;
     }
 
-    public void setIsEmailVerify(String isEmailVerify) {
-        this.isEmailVerify = isEmailVerify;
+    public boolean isEmailVerify() {
+        return isEmailVerify == 1;
+    }
+
+    public void setIsEmailVerify(boolean isEmailVerify) {
+        this.isEmailVerify = isEmailVerify ? 1 : 0;
     }
 
     public String getRegIp() {
@@ -455,7 +468,7 @@ public class User extends AbstractEntity {
         return "https://secure.gravatar.com/avatar/daf81b9574e052950c3336edcbee64b4";
     }
 
-    public String getRegDateText(){
+    public String getRegDateText() {
         return DateUtils.toDateTime(regDate);
     }
 

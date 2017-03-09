@@ -23,6 +23,7 @@ import java.io.IOException;
  *
  * @author Shengzhao Li
  */
+@Deprecated
 public class EnhanceEncodingFilter extends CharacterEncodingFilter {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -36,8 +37,8 @@ public class EnhanceEncodingFilter extends CharacterEncodingFilter {
             throws ServletException, IOException {
         logger.debug("before=========openSession");
 //        sessionFactory.openSession();
-        persistIp(request);
-        persistReqResp(request, response);
+//        persistIp(request);
+//        persistReqResp(request, response);
 
         super.doFilterInternal(request, response, filterChain);
 //        sessionFactory.getCurrentSession().close();
@@ -47,8 +48,8 @@ public class EnhanceEncodingFilter extends CharacterEncodingFilter {
     }
 
     /*
-    * 将IP地址 放置在 ThreadLocal 中
-    * */
+       * 将IP地址 放置在 ThreadLocal 中
+       * */
     private void persistIp(HttpServletRequest request) {
         final String clientIp = WebUtils.retrieveClientIp(request);
         ThreadLocalHolder.clientIp(clientIp);

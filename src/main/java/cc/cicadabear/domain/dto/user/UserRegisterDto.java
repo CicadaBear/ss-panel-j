@@ -17,6 +17,8 @@ public class UserRegisterDto extends AbstractDto {
     private String email;
     private String code;
 
+    private User user;
+
     public UserRegisterDto() {
     }
 
@@ -24,11 +26,23 @@ public class UserRegisterDto extends AbstractDto {
         return username;
     }
 
+    public String getName() {
+        return username;
+    }
+
+    public void setName(String username) {
+        this.username = username;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
 
     public String getPassword() {
+        return password;
+    }
+
+    public String getPasswd() {
         return password;
     }
 
@@ -44,11 +58,15 @@ public class UserRegisterDto extends AbstractDto {
         return rePassword;
     }
 
+    public String getRePasswd() {
+        return rePassword;
+    }
+
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
     }
 
-    public void setRePasswd(String rePasswd) {
+    public void setRepasswd(String rePasswd) {
         this.rePassword = rePasswd;
     }
 
@@ -71,8 +89,10 @@ public class UserRegisterDto extends AbstractDto {
 
 
     public User toEntity() {
-        String encryptPass = PasswordHandler.encryptPassword(password);
-        User user = new User(username, encryptPass, email);
+        if (user == null) {
+            String encryptPass = PasswordHandler.encryptPassword(password);
+            user = new User(username, encryptPass, email);
+        }
         return user;
     }
 

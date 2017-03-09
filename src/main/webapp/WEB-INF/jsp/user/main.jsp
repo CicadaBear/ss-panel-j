@@ -47,19 +47,20 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- User Account: style can be found in dropdown.less -->
+                    <c:set var="user" value='${fnc:getLoginUser()}'/>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="${fnc:getLoginUser().gravatar}" class="user-image" alt="User Image"/>
-                            <span class="hidden-xs">${fnc:getLoginUser().username()}</span>
+                            <img src="${user.gravatar}" class="user-image" alt="User Image"/>
+                            <span class="hidden-xs">${user.username}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="${fnc:getLoginUser().gravatar}" class="img-circle" alt="User Image"/>
+                                <img src="${user.gravatar}" class="img-circle" alt="User Image"/>
 
                                 <p>
-                                    ${fnc:getLoginUser().email()}
-                                    <small>加入时间：${fnc:getLoginUser().regDate}</small>
+                                    ${user.email}
+                                    <small>加入时间：${user.regDateText}</small>
                                 </p>
                             </li>
                             <li class="user-footer">
@@ -86,10 +87,10 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="${fnc:getLoginUser().gravatar}" class="img-circle" alt="User Image"/>
+                    <img src="${user.gravatar}" class="img-circle" alt="User Image"/>
                 </div>
                 <div class="pull-left info">
-                    <p>${fnc:getLoginUser().username}</p>
+                    <p>${user.username}</p>
 
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
@@ -134,7 +135,7 @@
                     </a>
                 </li>
 
-                <c:if test="${fnc:getLoginUser().isAdmin}">
+                <c:if test="${user.admin}">
                     <li>
                         <a href="/admin">
                             <i class="fa fa-cog"></i> <span>管理面板</span>
