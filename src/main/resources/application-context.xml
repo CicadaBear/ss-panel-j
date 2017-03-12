@@ -3,13 +3,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context.xsd
            http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+           http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--
         启用注解, 并扫描指定的包(package)
@@ -19,10 +22,25 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <context:property-placeholder location="classpath:sspanelj.properties"/>
+    <context:property-placeholder location="classpath:sspanelj.properties" file-encoding="UTF-8"/>
 
-    <bean class="cc.cicadabear.common.util.PropertiesLoader" factory-method="getSingleton"
-          p:locations="classpath:sspanelj.properties"/>
+    <aop:aspectj-autoproxy/>
+
+    <!--<bean id="timeCounterAspect" class="cc.cicadabear.common.aspect.TimeCounterAspect"/>-->
+
+    <!--<bean id="nameOfYourPropsVar" class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+    <!--<property name="location" value="classpath:${yourPropFileName}"/>-->
+    <!--<property name="fileEncoding" value="UTF-8"/>-->
+    <!--</bean>-->
+
+    <bean class="cc.cicadabear.common.util.PropertiesLoader" factory-method="getSingleton">
+        <property name="locations">
+            <list>
+                <value>classpath:sspanelj.properties</value>
+                <value>classpath:pagination.properties</value>
+            </list>
+        </property>
+    </bean>
 
 
     <!--
@@ -59,7 +77,7 @@
                 <prop key="hibernate.query.substitutions">true=1,false=0</prop>
                 <prop key="jdbc.use_scrollable_resultset">false</prop>
                 <!--<prop key="hibernate.current_session_context_class">-->
-                    <!--org.springframework.orm.hibernate4.SpringSessionContext-->
+                <!--org.springframework.orm.hibernate4.SpringSessionContext-->
                 <!--</prop>-->
                 <prop key="hibernate.current_session_context_class">
                     cc.cicadabear.web.context.CustomSessionContext

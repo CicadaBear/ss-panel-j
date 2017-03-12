@@ -1,4 +1,4 @@
-package cc.cicadabear.common;
+package cc.cicadabear.common.controller;
 
 /**
  * rest接口返回数据对象

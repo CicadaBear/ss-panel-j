@@ -1,11 +1,7 @@
 package cc.cicadabear;
 
 
-import cc.cicadabear.common.util.SecurityUtils;
 import cc.cicadabear.common.util.ThreadLocalHolder;
-import cc.cicadabear.domain.shared.BeanProvider;
-import cc.cicadabear.domain.shared.security.SecurityUserDetails;
-import cc.cicadabear.web.context.SpringSecurityHolder;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,14 +25,6 @@ public abstract class ContextTest extends AbstractTransactionalTestNGSpringConte
     @BeforeTransaction
     public void before() throws Exception {
         ThreadLocalHolder.setThreadLocalSession(sessionFactory.openSession());
-//        BeanProvider.initialize(applicationContext);
-//        SecurityUtils securityUtils = new SecurityUtils();
-//        securityUtils.setSecurityHolder(new SpringSecurityHolder() {
-//            @Override
-//            public SecurityUserDetails userDetails() {
-//                return null;
-//            }
-//        });
     }
 
     @AfterTransaction

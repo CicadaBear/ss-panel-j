@@ -1,4 +1,5 @@
-{include file='user/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="main.jsp" %>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -166,4 +167,4 @@
     })
 </script>
 
-{include file='user/footer.tpl'}
+<%@ include file="footer.jsp" %>

@@ -43,12 +43,13 @@ public class InviteCodeServiceTest extends ContextTest {
     public void testGenerateAdminCodes() {
         List<InviteCode> list = inviteCodeService.loadCodesByUser(1);
         List<InviteCode> list3 = inviteCodeService.loadCodesByUser(0);
-        inviteCodeService.generateAdminInviteCodes(1, 10);
+        User user1 = userService.loadUserByID(1);
+        inviteCodeService.generateAdminInviteCodes(user1, 10);
 
         List<InviteCode> list2 = inviteCodeService.loadCodesByUser(1);
         Assert.assertEquals(list2.size(), list.size() + 10);
 
-        inviteCodeService.generateAdminInviteCodes(0, 10);
+        inviteCodeService.generateAdminInviteCodes(null, 10);
 
         List<InviteCode> list5 = inviteCodeService.loadCodesByUser(0);
         Assert.assertEquals(list5.size(), list3.size() + 10);

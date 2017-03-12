@@ -131,7 +131,7 @@
 <script>
     $(document).ready(function () {
         $("#checkin").click(function () {
-            alert('暂未开通');
+            alert('暂未开放');
             return;
             $.ajax({
                 type: "POST",

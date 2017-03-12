@@ -86,7 +86,8 @@
                     <div class="icon">
                         <i class="ion ion-speedometer"></i>
                     </div>
-                    <a href="/admin/trafficlog" class="small-box-footer"> 流量记录 <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="/admin/trafficlog" class="small-box-footer" onclick="alert('暂未开放'); return false;"> 流量记录 <i
+                            class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>

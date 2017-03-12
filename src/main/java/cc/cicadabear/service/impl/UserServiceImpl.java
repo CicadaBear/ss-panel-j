@@ -59,12 +59,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserListDto loadUserListDto(UserListDto listDto) {
+    public UserListDto loadUserListDto(final UserListDto listDto) {
         final Map<String, Object> map = listDto.queryMap();
         return listDto.load(new PaginatedLoader<UserDto>() {
             @Override
             public List<UserDto> loadList() {
                 List<User> users = userRepository.findListUsers(map);
+                listDto.setUserList(users);
                 return UserDto.toDtos(users);
             }
 
@@ -116,7 +117,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(int id) {
         User user = userRepository.findById(id, User.class);
-        user.deleteMe();
+//        user.deleteMe();
+        userRepository.delete(user);
     }
 
     @Override

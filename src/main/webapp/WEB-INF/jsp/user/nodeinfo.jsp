@@ -1,4 +1,5 @@
-{include file='user/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="main.jsp" %>
 
 <div class="content-wrapper">
     <section class="content-header">
@@ -27,7 +28,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <textarea class="form-control" rows="6">{$json_show}</textarea>
+                        <textarea class="form-control" rows="6">${json}</textarea>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -41,9 +42,9 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="input-group">
-                            <input type="text" id="ss-qr-text" class="form-control" value="{$ssqr}">
+                            <input type="text" id="ss-qr-text" class="form-control" value="${ssqr}">
                             <div class="input-group-btn">
-                                <a class="btn btn-primary btn-flat" href="{$ssqr}">></a>
+                                <a class="btn btn-primary btn-flat" href="${ssqr}">></a>
                             </div>
                         </div>
                     </div>
@@ -108,7 +109,7 @@
                                 <div class="text-center">
                                     <div id="surge-base-qr"></div>
                                 </div>
-                                <textarea id="surge-base-text" class="form-control" rows="6">{$surge_base}</textarea>
+                                <textarea id="surge-base-text" class="form-control" rows="6">${surgeBase}</textarea>
                             </div>
                             <div class="col-md-4">
                                 <h4>代理配置</h4>
@@ -116,7 +117,7 @@
                                 <div class="text-center">
                                     <div id="surge-proxy-qr"></div>
                                 </div>
-                                <textarea id="surge-proxy-text" class="form-control" rows="6">{$surge_proxy}</textarea>
+                                <textarea id="surge-proxy-text" class="form-control" rows="6">${surgeProxy}</textarea>
                             </div>
                         </div>
                     </div>
@@ -125,7 +126,7 @@
         </div>
         <!-- /.row -->
         <!-- END PROGRESS BARS -->
-        <script src=" /assets/public/js/jquery.qrcode.min.js "></script>
+        <script src="${ctxStatic}/assets/public/js/jquery.qrcode.min.js "></script>
         <script>
             var text_qrcode = jQuery('#ss-qr-text').val();
             jQuery('#ss-qr').qrcode({
@@ -142,5 +143,6 @@
         </script>
     </section>
     <!-- /.content -->
-</div><!-- /.content-wrapper -->
-{include file='user/footer.tpl'}
+</div>
+<!-- /.content-wrapper -->
+<%@ include file="footer.jsp" %>

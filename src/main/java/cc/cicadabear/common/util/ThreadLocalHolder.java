@@ -14,16 +14,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class ThreadLocalHolder {
 
-    private static ThreadLocal<String> clientIpThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<String> clientIpThreadLocal = new ThreadLocal<String>();
 
-    private static ThreadLocal<HttpServletRequest> requestThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<HttpServletRequest> requestThreadLocal = new ThreadLocal<HttpServletRequest>();
 
-    private static ThreadLocal<HttpServletResponse> responseThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<HttpServletResponse> responseThreadLocal = new ThreadLocal<HttpServletResponse>();
 
-    private static ThreadLocal<Session> sessionThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<Session> sessionThreadLocal = new ThreadLocal<Session>();
 
-    private static ThreadLocal<ServletContext> servletContextThreadLocal = new ThreadLocal<>();
-    private static ThreadLocal<ApplicationContext> applicationContextThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<ServletContext> servletContextThreadLocal = new ThreadLocal<ServletContext>();
+    private static ThreadLocal<ApplicationContext> applicationContextThreadLocal = new ThreadLocal<ApplicationContext>();
 
 
     protected ThreadLocalHolder() {

@@ -1,4 +1,5 @@
-{include file='admin/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="main.jsp" %>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -38,7 +39,7 @@
                             <div class="form-group">
                                 <label>网站名</label>
                                 <input type="text" class="form-control" placeholder="Enter ..." id="app-name"
-                                       value="{$conf['app-name']}">
+                                       value="${fnc:getConfig("appName")}">
                             </div>
 
                             <div class="form-group">
@@ -90,11 +91,14 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-</div><!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 <script>
     $(document).ready(function () {
         $("#update").click(function () {
+            alert("暂未开放");
+            return;
             $.ajax({
                 type: "PUT",
                 url: "/admin/config",
@@ -122,4 +126,4 @@
     })
 </script>
 
-{include file='admin/footer.tpl'}
+<%@ include file="footer.jsp" %>

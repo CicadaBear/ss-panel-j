@@ -16,6 +16,7 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
@@ -199,7 +200,8 @@ public class PropertiesLoader {
         for (Resource resource : resources) {
             InputStream is = null;
             try {
-                props.load(resource.getInputStream());
+
+                props.load(new InputStreamReader(resource.getInputStream(), "UTF-8"));
             } catch (IOException ex) {
                 logger.info("Could not load properties from path:" + resource.getFilename() + ", " + ex.getMessage());
             } finally {

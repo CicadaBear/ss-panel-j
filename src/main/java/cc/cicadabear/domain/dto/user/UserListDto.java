@@ -1,8 +1,11 @@
 package cc.cicadabear.domain.dto.user;
 
 
+import cc.cicadabear.common.config.JConfig;
+import cc.cicadabear.domain.entity.User;
 import cc.cicadabear.domain.shared.paginated.DefaultPaginated;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,8 +13,10 @@ import java.util.Map;
  */
 public class UserListDto extends DefaultPaginated<UserDto> {
 
+    private List<User> userList;
 
     private String username;
+
 
 
     public UserListDto() {
@@ -30,5 +35,13 @@ public class UserListDto extends DefaultPaginated<UserDto> {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }

@@ -117,7 +117,7 @@
                 </li>
 
                 <li>
-                    <a href="/user/trafficlog">
+                    <a href="/user/trafficlog" onclick="alert('暂未开放');return false">
                         <i class="fa fa-history"></i> <span>流量记录</span>
                     </a>
                 </li>

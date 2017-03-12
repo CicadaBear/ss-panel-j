@@ -41,7 +41,10 @@
             &copy; ${fnc:getConfig("appName")} Powered by <a class="orange-text text-lighten-3"
                                                              href="https://github.com/orvice/ss-panel">ss-panel</a>
             ${fnc:getConfig("version")}
-            Theme by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+            Theme by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a> | Running
+            time ${runningTime} Milliseconds
+
+
         </div>
         <div style="display:none;">
             <%--{$analyticsCode}--%>

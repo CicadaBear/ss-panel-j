@@ -1,5 +1,5 @@
-{include file='admin/main.tpl'}
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../main.jsp" %>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -26,19 +26,19 @@
                                 <th>排序</th>
                                 <th>操作</th>
                             </tr>
-                            {foreach $nodes as $node}
+                            <c:forEach items="${nodes}" var="node" varStatus="s">
                             <tr>
-                                <td>#{$node->id}</td>
-                                <td> {$node->name}</td>
-                                <td>{$node->method}</td>
-                                <td>{$node->info}</td>
-                                <td>{$node->sort}</td>
+                                <td>#${node.id}</td>
+                                <td> ${node.name}</td>
+                                <td>${node.method}</td>
+                                <td>${node.info}</td>
+                                <td>${node.sort}</td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="/admin/node/{$node->id}/edit">编辑</a>
-                                    <a class="btn btn-danger btn-sm" id="delete" value="{$node->id}" href="/admin/node/{$node->id}/delete">删除</a>
+                                    <a class="btn btn-info btn-sm" href="/admin/node/${node.id}/edit">编辑</a>
+                                    <a class="btn btn-danger btn-sm" id="delete" value="${node.id}" href="/admin/node/${node.id}/delete">删除</a>
                                 </td>
                             </tr>
-                            {/foreach}
+                            </c:forEach>
                         </table>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
@@ -95,4 +95,4 @@
     })
 </script>
 
-{include file='admin/footer.tpl'}
+<%@ include file="../footer.jsp"%>

@@ -1,7 +1,6 @@
-package cc.cicadabear.web.controller.home;
+package cc.cicadabear.web.controller;
 
-import cc.cicadabear.common.ResultVo;
-import cc.cicadabear.common.util.NumberUtils;
+import cc.cicadabear.common.controller.ResultVo;
 import cc.cicadabear.common.util.SecurityUtils;
 import cc.cicadabear.domain.entity.InviteCode;
 import cc.cicadabear.domain.entity.User;
@@ -66,9 +65,18 @@ public class AdminController {
     @ResponseBody
     public ResultVo doInvite(int uid, int num) {
         ResultVo resultVo = new ResultVo();
-        inviteCodeService.generateAdminInviteCodes(uid, num);
+        User user = null;
+        if (uid != 0) {
+            user = userService.loadUserByID(uid);
+        }
+        inviteCodeService.generateAdminInviteCodes(user, num);
         resultVo.success("操作成功");
         return resultVo;
+    }
+
+    @RequestMapping(value = "/config")
+    public String config(Model model) {
+        return "admin/config";
     }
 
 }

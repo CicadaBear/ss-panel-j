@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableMap;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -36,13 +37,16 @@ public class InviteCodeRespostoryHibernate extends AbstractRepositoryHibernate<I
         super.saveOrUpdate(domain);
     }
 
-    public void saveAdminInviteCode(String code, int uid) {
+    public void insert(InviteCode inviteCode) {
         Query query = session().createSQLQuery("INSERT INTO ss_invite_code (code, user_id, created_at,updated_at) VALUES (:code, :uid, :createdAt, :updatedAt)");
-        query.setParameter("code", code);
+        query.setParameter("code", inviteCode.getCode());
+        int uid = inviteCode.getCreator() == null ? 0 : inviteCode.getCreator().id();
         query.setParameter("uid", uid);
         query.setTimestamp("createdAt", DateUtils.now());
         query.setTimestamp("updatedAt", DateUtils.now());
         query.executeUpdate();
+        int lastId = ((BigInteger) session().createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).intValue();
+        inviteCode.id(lastId);
     }
 
 }

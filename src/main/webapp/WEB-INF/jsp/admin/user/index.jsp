@@ -1,4 +1,5 @@
-{include file='admin/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../main.jsp" %>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -32,7 +33,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body table-responsive no-padding">
-                        {$users->render()}
+                        <%--{$users->render()}--%>
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
@@ -48,80 +49,84 @@
                                 <th>邀请者</th>
                                 <th>操作</th>
                             </tr>
-                            {foreach $users as $user}
-                            <tr>
-                                <td>#{$user->id}</td>
-                                <td><abbr title="{$user->user_name}">{$user->email}</abbr></td>
-                                <td>{$user->port}</td>
-                                <td>{$user->enable}</td>
-                                <td>{$user->method}</td>
-                                <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
-                                <td>{$user->lastSsTime()}</td>
-                                <td>{$user->lastCheckInTime()}</td>
-                                <th>{$user->reg_date}</th>
-                                <th>{$user->reg_ip}</th>
-                                <th>{$user->ref_by}</th>
-                                <td>
-                                    <a class="btn btn-info btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
-                                    <a class="btn btn-danger btn-sm" onclick="deleteUser({$user->id})">删除</a>
-                                </td>
-                            </tr>
-                            {/foreach}
+                            <%--{foreach $users as $user}--%>
+                            <c:forEach items="${listDto.userList}" var="user" varStatus="s">
+                                <tr>
+                                    <td>#${user.id}</td>
+                                    <td><abbr title="${user.username}">${user.email}</abbr></td>
+                                    <td>${user.port}</td>
+                                    <td>${user.enable}</td>
+                                    <td>${user.method}</td>
+                                    <td>${user.usedTraffic()}/${user.enableTraffic()}</td>
+                                    <td>${user.lastSsTime()}</td>
+                                    <td>${user.lastCheckInTime()}</td>
+                                    <th>${user.regDateText}</th>
+                                    <th>${user.regIp}</th>
+                                    <th>${user.inviterId}</th>
+                                    <td>
+                                        <a class="btn btn-info btn-sm" href="/admin/user/${user.id}/edit">编辑</a>
+                                        <a class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">删除</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            <%--{/foreach}--%>
                         </table>
-                        {$users->render()}
+                        <%--{$users->render()}--%>
+                        ${listDto.render()}
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>
         </div>
 
     </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 
 <script>
     //$(document).ready(function () {
-        function deleteUser(userId){
-            if (!confirm("确定要删除用户 #"+userId+" 吗？")){
-                return;
-            }
-            $.ajax({
-                type:"DELETE",
-                url:"/admin/user/"+userId,
-                dataType:"json",
-                data:{
-                    id: userId
-                },
-                success:function(data){
-                    if(data.ret){
-                        $("#msg-error").hide(100);
-                        $("#msg-success").show(100);
-                        $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/user'", 2000);
-                    }else{
-                        $("#msg-error").hide(10);
-                        $("#msg-error").show(100);
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error:function(jqXHR){
+    function deleteUser(userId) {
+        if (!confirm("确定要删除用户 #" + userId + " 吗？")) {
+            return;
+        }
+        $.ajax({
+            type: "DELETE",
+            url: "/admin/user/" + userId,
+            dataType: "json",
+            data: {
+                id: userId
+            },
+            success: function (data) {
+                if (data.ret) {
+                    $("#msg-error").hide(100);
+                    $("#msg-success").show(100);
+                    $("#msg-success-p").html(data.msg);
+                    window.setTimeout("location.href='/admin/user'", 2000);
+                } else {
                     $("#msg-error").hide(10);
                     $("#msg-error").show(100);
-                    $("#msg-error-p").html("发生错误："+jqXHR.status);
+                    $("#msg-error-p").html(data.msg);
                 }
-            });
-        }
-        $("html").keydown(function(event){
-            if(event.keyCode==13){
-                login();
+            },
+            error: function (jqXHR) {
+                $("#msg-error").hide(10);
+                $("#msg-error").show(100);
+                $("#msg-error-p").html("发生错误：" + jqXHR.status);
             }
         });
-        $("#ok-close").click(function(){
-            $("#msg-success").hide(100);
-        });
-        $("#error-close").click(function(){
-            $("#msg-error").hide(100);
-        });
+    }
+    $("html").keydown(function (event) {
+        if (event.keyCode == 13) {
+            login();
+        }
+    });
+    $("#ok-close").click(function () {
+        $("#msg-success").hide(100);
+    });
+    $("#error-close").click(function () {
+        $("#msg-error").hide(100);
+    });
     //})
 </script>
 
-{include file='admin/footer.tpl'}
+<%@ include file="../footer.jsp" %>

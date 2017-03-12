@@ -127,14 +127,14 @@
                 </li>
 
                 <li>
-                    <a href="/admin/trafficlog">
+                    <a href="/admin/trafficlog" onclick="alert('暂未开放');return false">
                         <i class="fa fa-history"></i> <span>流量记录</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="/admin/checkinlog">
-                        <i class="fa  fa-check-square"></i> <span>签到日志</span>
+                    <a href="/admin/checkinlog" onclick="alert('暂未开放');return false">
+                        <i class="fa fa-check-square"></i> <span>签到日志</span>
                     </a>
                 </li>
 

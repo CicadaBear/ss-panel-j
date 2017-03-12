@@ -1,4 +1,5 @@
-{include file='user/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="main.jsp" %>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -115,10 +116,13 @@
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <select class="form-control" id="method">
-                                        {foreach $method as $cipher}
-                                           <option value="{$cipher}" {if $user->method==$cipher}selected="selected"{/if} >{$cipher}</option>  
-                                        {/foreach}
-                                        </select>  
+                                            <c:forEach items="${methods}" var="cipher">
+                                                <option value="${cipher}"
+                                                        <c:if test="${user.method==cipher}"> selected="selected" </c:if>>
+                                                        ${cipher}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
                                         <div class="input-group-btn">
                                             <button type="submit" id="method-update" class="btn btn-primary">修改</button>
                                         </div>
@@ -138,7 +142,8 @@
         </div>
     </section>
     <!-- /.content -->
-</div><!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 <script>
     $("#msg-success").hide();
@@ -232,4 +237,4 @@
 </script>
 
 
-{include file='user/footer.tpl'}
+<%@ include file="footer.jsp" %>

@@ -1,11 +1,9 @@
-package cc.cicadabear.web.controller.home;
+package cc.cicadabear.web.controller;
 
-import cc.cicadabear.common.ResultVo;
+import cc.cicadabear.common.controller.ResultVo;
 import cc.cicadabear.common.util.ThreadLocalHolder;
 import cc.cicadabear.domain.dto.user.UserLoginDto;
 import cc.cicadabear.domain.dto.user.UserRegisterDto;
-import cc.cicadabear.domain.entity.InviteCode;
-import cc.cicadabear.domain.entity.User;
 import cc.cicadabear.service.InviteCodeService;
 import cc.cicadabear.service.UserService;
 import cc.cicadabear.web.validator.UserLoginDtoValidator;
@@ -19,13 +17,11 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
-import javax.validation.Valid;
 
 /**
  * Created by Jack on 3/8/17.

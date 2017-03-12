@@ -1,4 +1,5 @@
-{include file='user/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="main.jsp" %>
 
 <div class="content-wrapper">
     <section class="content-header">
@@ -22,14 +23,14 @@
                     <div class="box-body">
                         <dl class="dl-horizontal">
                             <dt>用户名</dt>
-                            <dd>{$user->user_name}</dd>
+                            <dd>${user.username}</dd>
                             <dt>邮箱</dt>
-                            <dd>{$user->email}</dd>
+                            <dd>${user.email}</dd>
                         </dl>
 
                     </div>
                     <div class="box-footer">
-                        <a class="btn btn-danger btn-sm" href="kill">删除我的账户</a>
+                        <a class="btn btn-danger btn-sm" href="kill" onclick="alert('暂未开放');return false">删除我的账户</a>
                     </div>
                     <!-- /.box -->
                 </div>
@@ -37,5 +38,6 @@
         </div>
     </section>
     <!-- /.content -->
-</div><!-- /.content-wrapper -->
-{include file='user/footer.tpl'}
+</div>
+<!-- /.content-wrapper -->
+<%@ include file="footer.jsp" %>

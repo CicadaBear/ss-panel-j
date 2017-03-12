@@ -48,15 +48,18 @@ public class InviteCodeServiceImpl implements InviteCodeService {
         for (int i = 0; i < num; i++) {
             InviteCode inviteCode = new InviteCode(RandomStringUtils.randomAlphanumeric(32));
             inviteCode.setCreator(user);
+            inviteCodeRepository.saveOrUpdate(inviteCode);
             user.getInviteCodes().add(inviteCode);
         }
         user.setInviteNum(user.getInviteNum() - num);
         userRepository.saveOrUpdate(user);
     }
 
-    public void generateAdminInviteCodes(int uid, int num) {
+    public void generateAdminInviteCodes(User user, int num) {
         for (int i = 0; i < num; i++) {
-            inviteCodeRepository.saveAdminInviteCode(RandomStringUtils.randomAlphanumeric(32), uid);
+            InviteCode inviteCode = new InviteCode(RandomStringUtils.randomAlphanumeric(32));
+            inviteCode.setCreator(user);
+            inviteCodeRepository.insert(inviteCode);
         }
     }
 

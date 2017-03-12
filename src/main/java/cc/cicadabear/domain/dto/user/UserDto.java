@@ -17,14 +17,21 @@ public class UserDto extends AbstractDto {
 
     protected String email;
 
+    protected User user;
+
     public UserDto() {
     }
 
     public UserDto(User user) {
         super(user.id());
+        this.user = user;
         this.username = user.username();
 
         this.email = user.email();
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public String getUsername() {
@@ -53,7 +60,7 @@ public class UserDto extends AbstractDto {
     }
 
     public static List<UserDto> toDtos(List<User> users) {
-        List<UserDto> dtoList = new ArrayList<>(users.size());
+        List<UserDto> dtoList = new ArrayList<UserDto>(users.size());
         for (User user : users) {
             dtoList.add(new UserDto(user));
         }

@@ -18,7 +18,7 @@ public class SecurityUserDetails implements UserDetails {
 
     protected User user;
 
-    protected List<GrantedAuthority> authorities = new ArrayList<>();
+    protected List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
     public SecurityUserDetails() {
     }

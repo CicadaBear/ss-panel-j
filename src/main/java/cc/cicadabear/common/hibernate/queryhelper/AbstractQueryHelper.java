@@ -17,8 +17,8 @@ public abstract class AbstractQueryHelper<T> implements QueryHelper<T> {
 
     protected final static Logger LOG = LoggerFactory.getLogger(AbstractQueryHelper.class);
 
-    private List<Filter> filters = new ArrayList<>();
-    private List<SortCriterionFilter> sortCriterionFilters = new ArrayList<>();
+    private List<Filter> filters = new ArrayList<Filter>();
+    private List<SortCriterionFilter> sortCriterionFilters = new ArrayList<SortCriterionFilter>();
     protected Session session;
 
     protected AbstractQueryHelper() {

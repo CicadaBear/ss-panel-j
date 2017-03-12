@@ -110,7 +110,7 @@ public class User extends AbstractEntity {
     private String regIp;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+//    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<InviteCode> inviteCodes;
 
 
@@ -354,6 +354,14 @@ public class User extends AbstractEntity {
         } catch (ObjectNotFoundException e) {
             return null;
         }
+    }
+
+    public int getInviterId() {
+        User inviter = getInviter();
+        if (inviter == null) {
+            return 0;
+        }
+        return inviter.getId();
     }
 
     public void setInviter(User inviter) {

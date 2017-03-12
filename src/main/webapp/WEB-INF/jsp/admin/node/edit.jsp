@@ -1,11 +1,12 @@
-{include file='admin/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../main.jsp" %>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            编辑节点 #{$node->id}
+            编辑节点 #${node.id}
             <small>Edit Node</small>
         </h1>
     </section>
@@ -42,7 +43,7 @@
                                         <label for="title" class="col-sm-3 control-label">节点名称</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="name" value="{$node->name}">
+                                            <input class="form-control" id="name" value="${node.name}">
                                         </div>
                                     </div>
 
@@ -50,7 +51,7 @@
                                         <label for="server" class="col-sm-3 control-label">节点地址</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="server" value="{$node->server}">
+                                            <input class="form-control" id="server" value="${node.server}">
                                         </div>
                                     </div>
 
@@ -59,10 +60,12 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
-                                            {foreach $method as $cipher}
-                                               <option value="{$cipher}" {if $node->method==$cipher}selected="selected"{/if} >{$cipher}</option>  
-                                            {/foreach}
-                                            </select>  
+                                                <c:forEach items="${methods}" var="cipher">
+                                                    <option value="${cipher}" <c:if
+                                                            test="${node.method==cipher}"> selected="selected"</c:if> >${cipher}
+                                                    </option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -70,7 +73,7 @@
                                         <label for="rate" class="col-sm-3 control-label">流量比例</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="rate" value="{$node->traffic_rate}">
+                                            <input class="form-control" id="rate" value="${node.trafficRate}">
                                         </div>
 
                                     </div>
@@ -80,10 +83,12 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="custom_method">
-                                                <option value="0" {if $node->custom_method==0}selected="selected"{/if}>
+                                                <option value="0"
+                                                        <c:if test="${not node.customMethod}">selected="selected"</c:if>>
                                                     不支持
                                                 </option>
-                                                <option value="1" {if $node->custom_method==1}selected="selected"{/if}>
+                                                <option value="1"
+                                                        <c:if test="${node.customMethod}">selected="selected"</c:if>>
                                                     支持
                                                 </option>
                                             </select>
@@ -102,9 +107,11 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="type">
-                                                <option value="1" {if $node->type==1}selected="selected"{/if}>显示
+                                                <option value="1"
+                                                        <c:if test="${node.type==1}">selected="selected"</c:if>>显示
                                                 </option>
-                                                <option value="0" {if $node->type==0}selected="selected"{/if}>隐藏
+                                                <option value="0"
+                                                        <c:if test="${node.type==0}">selected="selected"</c:if>>隐藏
                                                 </option>
                                             </select>
                                         </div>
@@ -115,7 +122,7 @@
                                         <label for="status" class="col-sm-3 control-label">节点状态</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="status" value="{$node->status}">
+                                            <input class="form-control" id="status" value="${node.status}">
                                         </div>
                                     </div>
 
@@ -123,14 +130,14 @@
                                         <label for="sort" class="col-sm-3 control-label">排序</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="sort" type="number" value="{$node->sort}">
+                                            <input class="form-control" id="sort" type="number" value="${node.sort}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="info" class="col-sm-3 control-label">节点描述</label>
 
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" id="info" rows="3">{$node->info}</textarea>
+                                            <textarea class="form-control" id="info" rows="3">${node.info}</textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -148,14 +155,15 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-</div><!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 <script>
     $(document).ready(function () {
         function submit() {
             $.ajax({
                 type: "PUT",
-                url: "/admin/node/{$node->id}",
+                url: "/admin/node/${node.id}",
                 dataType: "json",
                 data: {
                     name: $("#name").val(),
@@ -206,4 +214,4 @@
 </script>
 
 
-{include file='admin/footer.tpl'}
+<%@ include file="../footer.jsp" %>

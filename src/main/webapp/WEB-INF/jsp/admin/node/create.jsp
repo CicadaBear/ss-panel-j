@@ -1,4 +1,6 @@
-{include file='admin/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../main.jsp" %>
+
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -59,9 +61,9 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
-                                            {foreach $method as $cipher}
-                                               <option value="{$cipher}">{$cipher}</option>  
-                                            {/foreach}
+                                                <c:forEach items="${methods}" var="cipher" varStatus="s">
+                                                    <option value="${cipher}">${cipher}</option>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -121,7 +123,7 @@
                                         <label for="sort" class="col-sm-3 control-label">排序</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="sort" type="number" value="">
+                                            <input class="form-control" id="sort" type="number" value="0">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -147,7 +149,8 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-</div><!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 <script>
     $(document).ready(function () {
@@ -205,4 +208,4 @@
 </script>
 
 
-{include file='admin/footer.tpl'}
+<%@ include file="../footer.jsp" %>

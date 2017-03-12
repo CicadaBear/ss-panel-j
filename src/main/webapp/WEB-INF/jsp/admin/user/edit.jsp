@@ -1,11 +1,12 @@
-{include file='admin/main.tpl'}
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../main.jsp" %>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            用户编辑 #{$user->id}
+            用户编辑 #${member.id}
             <small>Edit User</small>
         </h1>
     </section>
@@ -42,21 +43,21 @@
                                         <label class="col-sm-3 control-label">昵称</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="user_name" value="{$user->user_name}">
+                                            <input class="form-control" id="user_name" value="${member.username}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">邮箱</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="email" type="email" value="{$user->email}">
+                                            <input class="form-control" id="email" type="email" value="${member.email}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">密码</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="pass" value="" placeholder="不修改时留空">
+                                            <input class="form-control" id="passwd" value="" placeholder="不修改时留空">
                                         </div>
                                     </div>
 
@@ -65,10 +66,12 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="is_admin">
-                                                <option value="0" {if $user->is_admin==0}selected="selected"{/if}>
+                                                <option value="0"
+                                                        <c:if test="${not member.isAdmin()}">selected="selected"</c:if>>
                                                     否
                                                 </option>
-                                                <option value="1" {if $user->is_admin==1}selected="selected"{/if}>
+                                                <option value="1"
+                                                        <c:if test="${member.isAdmin()}">selected="selected"</c:if>>
                                                     是
                                                 </option>
                                             </select>
@@ -80,13 +83,15 @@
                                         <label class="col-sm-3 control-label">用户状态</label>
 
                                         <div class="col-sm-9"><select class="form-control" id="enable">
-                                                <option value="1" {if $user->enable==1}selected="selected"{/if}>
-                                                    正常
-                                                </option>
-                                                <option value="0" {if $user->enable==0}selected="selected"{/if}>
-                                                    禁用
-                                                </option>
-                                            </select>
+                                            <option value="1"
+                                                    <c:if test="${member.enable==1}">selected="selected"</c:if>>
+                                                正常
+                                            </option>
+                                            <option value="0"
+                                                    <c:if test="${member.enable==0}">selected="selected"</c:if>>
+                                                禁用
+                                            </option>
+                                        </select>
                                         </div>
                                     </div>
 
@@ -97,7 +102,8 @@
                                         <label class="col-sm-3 control-label">连接端口</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="port" type="number" value="{$user->port}">
+                                            <input class="form-control" id="port" type="number" readonly=""
+                                                   value="${member.port}">
                                         </div>
                                     </div>
 
@@ -105,7 +111,7 @@
                                         <label class="col-sm-3 control-label">连接密码</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="passwd" value="{$user->passwd}">
+                                            <input class="form-control" id="pass" value="${member.pass}">
                                         </div>
                                     </div>
 
@@ -114,10 +120,13 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
-                                            {foreach $method as $cipher}
-                                               <option value="{$cipher}" {if $user->method==$cipher}selected="selected"{/if} >{$cipher}</option>  
-                                            {/foreach}
-                                            </select>  
+                                                <c:forEach items="${methods}" var="cipher" varStatus="s">
+                                                    <option value="{$cipher}" <c:if
+                                                            test="${member.method==cipher}">selected="selected"</c:if>>
+                                                            ${cipher}
+                                                    </option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -131,7 +140,7 @@
                                         <div class="col-sm-9">
                                             <div class="input-group">
                                                 <input class="form-control" id="transfer_enable" type="number"
-                                                       value="{$user->enableTrafficInGB()}">
+                                                       value="${member.enableTrafficInGB()}">
 
                                                 <div class="input-group-addon">GiB</div>
                                             </div>
@@ -144,7 +153,7 @@
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="traffic_usage" type="text"
-                                                   value="{$user->usedTraffic()}" readonly>
+                                                   value="${member.usedTraffic()}" readonly>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -155,7 +164,7 @@
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="invite_num" type="number"
-                                                   value="{$user->invite_num}">
+                                                   value="${member.inviteNum}">
                                         </div>
                                     </div>
 
@@ -164,7 +173,7 @@
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="ref_by" type="number"
-                                                   value="{$user->ref_by}" readonly>
+                                                   value="${member.inviterId}" readonly>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -190,7 +199,7 @@
         function submit() {
             $.ajax({
                 type: "PUT",
-                url: "/admin/user/{$user->id}",
+                url: "/admin/user/${member.id}",
                 dataType: "json",
                 data: {
                     user_name: $("#user_name").val(),
@@ -243,4 +252,4 @@
 </script>
 
 
-{include file='admin/footer.tpl'}
+<%@include file="../footer.jsp" %>

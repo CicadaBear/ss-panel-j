@@ -17,27 +17,36 @@
     <!--static url pattern-->
     <http pattern="/resources/**" security="none"/>
 
+    <!--<http pattern="/api/**" security="none">-->
+    <!--<custom-filter ref="apiFilter" position="FIRST"/>-->
+    <!--</http>-->
+    <!--<beans:bean id="apiAuthenticationEntryPoint" class="cc.cicadabear.web.context.ApiAuthenticationEntryPoint"/>-->
 
     <http pattern="/**" auto-config="true" authentication-manager-ref="authenticationManager"
           use-expressions="true">
-        <custom-filter ref="FirstFilter" position="FIRST"/>
+
+        <custom-filter ref="firstFilter" position="FIRST"/>
+        <custom-filter ref="apiFilter" after="FIRST"/>
+
         <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/code" access="permitAll"/>
         <intercept-url pattern="/tos" access="permitAll"/>
         <intercept-url pattern="/auth/login" access="permitAll"/>
         <intercept-url pattern="/auth/register" access="permitAll"/>
-        <intercept-url pattern="/test/*" access="permitAll"/>
+        <intercept-url pattern="/test/**" access="permitAll"/>
+        <intercept-url pattern="/api/**" access="permitAll"/>
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
-        <remember-me key="reemember_me"/>
+        <remember-me key="remember_me"/>
         <form-login login-page="/auth/login" login-processing-url="/auth/doLogin"/>
         <logout logout-success-url="/" logout-url="/user/logout" delete-cookies="JSESSIONID"/>
 
         <access-denied-handler error-page="/auth/login"/>
     </http>
+    <beans:bean id="firstFilter" class="cc.cicadabear.web.context.FirstFilter"/>
+    <beans:bean id="apiFilter" class="cc.cicadabear.web.context.ApiFilter"/>
 
-    <beans:bean id="FirstFilter" class="cc.cicadabear.web.context.FirstFilter"/>
 
     <authentication-manager id="authenticationManager">
         <authentication-provider user-service-ref="userService">

@@ -107,6 +107,6 @@ public abstract class AbstractRepositoryHibernate<T> implements Repository, Init
 
     @Override
     public <T extends AbstractEntity> List<T> findAll(Class<T> clazz, boolean active) {
-        return find("from " + clazz.getName() + " c where c.archived = :archived", ImmutableMap.of("archived", !active));
+        return find("from " + clazz.getName() + " c ");
     }
 }

@@ -1,4 +1,4 @@
-package cc.cicadabear.web.controller.home;
+package cc.cicadabear.web.controller;
 
 import cc.cicadabear.domain.entity.InviteCode;
 import cc.cicadabear.service.InviteCodeService;

@@ -7,7 +7,8 @@
         Made with Love
     </div>
     <strong>Copyright &copy; 2017 <a href="#">${fnc:getConfig("appName")}</a> </strong>
-    All rights reserved. Powered by <b>ss-panel</b> ${fnc:getConfig("version")}| <a href="/tos">服务条款 </a>
+    All rights reserved. Powered by <b>ss-panel</b> ${fnc:getConfig("version")}| <a href="/tos">服务条款 </a> | Running
+    time ${runningTime} Milliseconds
 </footer>
 </div><!-- ./wrapper -->
 

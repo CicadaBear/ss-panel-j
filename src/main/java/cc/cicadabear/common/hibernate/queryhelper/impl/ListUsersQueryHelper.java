@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import java.util.Map;
 
 /**
- *
  * @author Shengzhao Li
  */
 public class ListUsersQueryHelper extends AbstractQueryHelper<User> {
@@ -30,7 +29,7 @@ public class ListUsersQueryHelper extends AbstractQueryHelper<User> {
         addSortCriterionFilter(new SortCriterionFilter() {
             @Override
             public String getSubHql() {
-                return " ai.createTime desc ";
+                return " ai.id asc ";
             }
         });
     }
@@ -65,11 +64,11 @@ public class ListUsersQueryHelper extends AbstractQueryHelper<User> {
 
     @Override
     public String getAmountHql() {
-        return " select count(ai.id) from User ai where ai.archived = false ";
+        return " select count(ai.id) from User ai";
     }
 
     @Override
     public String getResultHql() {
-        return " from User ai where ai.archived = false ";
+        return " from User ai ";
     }
 }

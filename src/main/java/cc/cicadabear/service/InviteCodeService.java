@@ -20,5 +20,5 @@ public interface InviteCodeService {
 
     void generateInviteCodes(User user, int num);
 
-    void generateAdminInviteCodes(int uid, int num);
+    void generateAdminInviteCodes(User user, int num);
 }

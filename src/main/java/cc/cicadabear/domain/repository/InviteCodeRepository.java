@@ -18,5 +18,5 @@ public interface InviteCodeRepository extends Repository {
 
     List<InviteCode> findByUser(int userId);
 
-    void saveAdminInviteCode(String code, int uid);
+    void insert(InviteCode inviteCode);
 }
