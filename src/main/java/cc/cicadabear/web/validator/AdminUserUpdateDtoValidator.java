@@ -17,7 +17,6 @@ import org.springframework.validation.Validator;
 @Component
 public class AdminUserUpdateDtoValidator implements Validator {
 
-    private User user;
 
     @Autowired
     private UserService userService;
@@ -30,11 +29,11 @@ public class AdminUserUpdateDtoValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         AdminUserUpdateDto dto = (AdminUserUpdateDto) target;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "该用户不存在");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "邮箱不能为空");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "邮箱不能为空");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pass", "连接密码不能为空");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "method", "加密方式不能为空");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", null, "该用户不存在");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", null, "邮箱不能为空");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user_name", null, "用户名不能为空");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pass", null, "连接密码不能为空");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "method", null, "加密方式不能为空");
         if (errors.hasErrors()) return;
 
         validateID(dto, errors);
@@ -49,20 +48,34 @@ public class AdminUserUpdateDtoValidator implements Validator {
         validateMethod(dto, errors);
         if (errors.hasErrors()) return;
 
+        resetUser(dto.getUser(), dto);
     }
 
-    public User getUser() {
+    public User resetUser(User user, AdminUserUpdateDto dto) {
+        user.setUsername(dto.getUsername());
+        user.setIsAdmin(dto.isAdmin());
+        if (StringUtils.isNotEmpty(dto.getPassword())) {
+            user.setPassword(dto.getPassword());
+        }
+        user.setPass(dto.getPass());
+        user.setMethod(dto.getMethod());
+        user.setInviteNum(dto.getInviteNum());
+        user.setEmail(dto.getEmail());
+        user.setEnable(dto.getEnable() == 1);
+        user.setTransferEnable(dto.getTransferEnable());
         return user;
     }
 
     private void validateID(AdminUserUpdateDto dto, Errors errors) {
-        user = userService.loadUserByID(dto.getId());
+        User user = userService.loadUserByID(dto.getId());
+        dto.setUser(user);
         if (user == null) {
             errors.reject(null, "该用户不存在");
         }
     }
 
     private void validateEmail(AdminUserUpdateDto dto, Errors errors) {
+        User user = dto.getUser();
         if (!user.getEmail().equals(dto.getEmail())) {
             if (userService.isExistEmail(dto.getEmail())) {
                 errors.reject(null, "Email已存在");

@@ -1,10 +1,15 @@
 package cc.cicadabear.web.controller.admin;
 
 import cc.cicadabear.common.controller.ResultVo;
+import cc.cicadabear.common.util.ThreadLocalHolder;
 import cc.cicadabear.domain.dto.node.NodeDto;
+import cc.cicadabear.domain.dto.user.AdminUserUpdateDto;
+import cc.cicadabear.domain.dto.user.NodeUpdateDto;
 import cc.cicadabear.domain.entity.Node;
+import cc.cicadabear.domain.entity.User;
 import cc.cicadabear.service.NodeService;
 import cc.cicadabear.web.validator.NodeAddValidator;
+import cc.cicadabear.web.validator.NodeUpdateDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 
 /**
@@ -28,6 +34,9 @@ public class NodeController {
 
     @Autowired
     private NodeAddValidator nodeAddValidator;
+
+    @Autowired
+    private NodeUpdateDtoValidator nodeUpdateDtoValidator;
 
     @RequestMapping(value = {"/", ""})
     public String index(Model model) {
@@ -65,12 +74,32 @@ public class NodeController {
         return resultVo;
     }
 
-//    @RequestMapping(value = "/add", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResultVo add() {
-//        ResultVo resultVo = new ResultVo();
-//        return resultVo;
-//    }
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    public String edit(@PathVariable("id") int id, Model model) {
+        Node node = nodeService.loadNodeByID(id);
+//        User user = userService.loadUserByID(3);
+        if (node == null) {
+            String referer = ThreadLocalHolder.getRequest().getHeader("Referer");
+            ThreadLocalHolder.getRequest().setAttribute("msg", "节点不存在");
+            return "redirect:" + referer;
+        }
+        model.addAttribute("node", node);
+        model.addAttribute("methods", Node.METHODS_LIST);
+        return "admin/node/edit";
+    }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResultVo update(NodeUpdateDto dto, BindingResult br) {
+        ResultVo resultVo = new ResultVo();
+        nodeUpdateDtoValidator.validate(dto, br);
+        if (br.hasErrors()) {
+            resultVo.fail(br.getAllErrors().get(0).getDefaultMessage());
+            return resultVo;
+        }
+        nodeService.saveOrUpdate(dto.getNode());
+        resultVo.success("操作成功");
+        return resultVo;
+    }
 
 }

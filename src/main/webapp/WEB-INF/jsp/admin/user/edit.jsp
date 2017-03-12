@@ -121,7 +121,7 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
                                                 <c:forEach items="${methods}" var="cipher" varStatus="s">
-                                                    <option value="{$cipher}" <c:if
+                                                    <option value="${cipher}" <c:if
                                                             test="${member.method==cipher}">selected="selected"</c:if>>
                                                             ${cipher}
                                                     </option>

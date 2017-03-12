@@ -37,4 +37,9 @@ public class NodeServiceImpl implements NodeService {
     public void deleteNode(int id) {
         nodeRepository.delete(nodeRepository.findByID(id));
     }
+
+    @Override
+    public void saveOrUpdate(Node node) {
+        nodeRepository.saveOrUpdate(node);
+    }
 }

@@ -9,7 +9,6 @@ import cc.cicadabear.domain.entity.User;
 import cc.cicadabear.service.UserService;
 import cc.cicadabear.web.validator.AdminUserUpdateDtoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletRequest;
 
 /**
  * Created by Jack on 3/11/17.
@@ -67,16 +66,14 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResultVo update(@PathVariable("id") int id, AdminUserUpdateDto dto, BindingResult br) {
+    public ResultVo update(AdminUserUpdateDto dto, BindingResult br, ServletRequest request) {
         ResultVo resultVo = new ResultVo();
-        dto.setId(id);
         userUpdateDtoValidator.validate(dto, br);
         if (br.hasErrors()) {
             resultVo.fail(br.getAllErrors().get(0).getDefaultMessage());
             return resultVo;
         }
-        User user = userUpdateDtoValidator.getUser();
-        userService.saveOrUpdate(dto.toEntity(user));
+        userService.saveOrUpdate(dto.getUser());
         resultVo.success("操作成功");
         return resultVo;
     }

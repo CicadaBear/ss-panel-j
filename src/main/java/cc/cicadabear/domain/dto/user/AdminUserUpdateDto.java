@@ -6,6 +6,8 @@ import cc.cicadabear.domain.dto.AbstractDto;
 import cc.cicadabear.domain.entity.User;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.ServletRequest;
+
 /**
  * @author Shengzhao Li
  */
@@ -23,11 +25,16 @@ public class AdminUserUpdateDto extends AbstractDto {
 
     private int is_admin;
 
+    private User user;
 
     public AdminUserUpdateDto() {
     }
 
     public String getUsername() {
+        return username;
+    }
+
+    public String getUser_name() {
         return username;
     }
 
@@ -40,6 +47,10 @@ public class AdminUserUpdateDto extends AbstractDto {
     }
 
     public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setUser_name(String username) {
         this.username = username;
     }
 
@@ -103,6 +114,10 @@ public class AdminUserUpdateDto extends AbstractDto {
         this.transfer_enable = transfer_enable;
     }
 
+    public void setTransferEnable(long transfer_enable) {
+        this.transfer_enable = transfer_enable;
+    }
+
     public int getInviteNum() {
         return invite_num;
     }
@@ -112,6 +127,10 @@ public class AdminUserUpdateDto extends AbstractDto {
     }
 
     public void setInvite_num(int invite_num) {
+        this.invite_num = invite_num;
+    }
+
+    public void setInviteNum(int invite_num) {
         this.invite_num = invite_num;
     }
 
@@ -127,19 +146,15 @@ public class AdminUserUpdateDto extends AbstractDto {
         this.is_admin = is_admin;
     }
 
-    public User toEntity(User user) {
-        user.setUsername(username);
-        user.setIsAdmin(isAdmin());
-        if (StringUtils.isNotEmpty(getPassword())) {
-            user.setPassword(getPassword());
-        }
-        user.setPass(pass);
-        user.setMethod(method);
-        user.setInviteNum(getInviteNum());
-        user.setEmail(email);
-        user.setEnable(enable == 1);
-        user.setTransferEnable(getTransferEnable());
+    public void setIsAdmin(int is_admin) {
+        this.is_admin = is_admin;
+    }
+
+    public User getUser() {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

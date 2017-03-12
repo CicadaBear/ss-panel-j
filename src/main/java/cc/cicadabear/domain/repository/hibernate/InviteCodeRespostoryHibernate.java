@@ -28,14 +28,14 @@ public class InviteCodeRespostoryHibernate extends AbstractRepositoryHibernate<I
         return find("from InviteCode c where c.creator.id = :uid order by id ", ImmutableMap.of("uid", userId));
     }
 
-    @Override
-    public <T extends AbstractEntity> void saveOrUpdate(T domain) {
-        if (domain.isNewly()) {
-            ((InviteCode) domain).setCreatedAt(DateUtils.now());
-        }
-        ((InviteCode) domain).setUpdatedAt(DateUtils.now());
-        super.saveOrUpdate(domain);
-    }
+//    @Override
+//    public <T extends AbstractEntity> void saveOrUpdate(T domain) {
+//        if (domain.isNewly()) {
+//            ((InviteCode) domain).setCreatedAt(DateUtils.now());
+//        }
+//        ((InviteCode) domain).setUpdatedAt(DateUtils.now());
+//        super.saveOrUpdate(domain);
+//    }
 
     public void insert(InviteCode inviteCode) {
         Query query = session().createSQLQuery("INSERT INTO ss_invite_code (code, user_id, created_at,updated_at) VALUES (:code, :uid, :createdAt, :updatedAt)");

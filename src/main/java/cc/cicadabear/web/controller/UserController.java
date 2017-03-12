@@ -3,22 +3,29 @@ package cc.cicadabear.web.controller;
 import cc.cicadabear.common.controller.ResultVo;
 import cc.cicadabear.common.util.SecurityUtils;
 import cc.cicadabear.common.util.ThreadLocalHolder;
+import cc.cicadabear.domain.dto.user.NodeUpdateDto;
+import cc.cicadabear.domain.dto.user.UserUpdateDto;
 import cc.cicadabear.domain.entity.InviteCode;
 import cc.cicadabear.domain.entity.Node;
 import cc.cicadabear.domain.entity.User;
 import cc.cicadabear.service.InviteCodeService;
 import cc.cicadabear.service.NodeService;
 import cc.cicadabear.service.UserService;
+import cc.cicadabear.web.validator.SsMethodUpdateDtoValidator;
+import cc.cicadabear.web.validator.SsPassUpdateDtoValidator;
+import cc.cicadabear.web.validator.UserPasswordUpdateDtoValidator;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +44,16 @@ public class UserController {
 
     @Autowired
     private NodeService nodeService;
+
+    @Autowired
+    private UserPasswordUpdateDtoValidator userPasswordUpdateDtoValidator;
+
+    @Autowired
+    private SsMethodUpdateDtoValidator ssMethodUpdateDtoValidator;
+
+    @Autowired
+    private SsPassUpdateDtoValidator ssPassUpdateDtoValidator;
+
 
     @RequestMapping(value = {"/", ""})
     public String index(Model model) {
@@ -128,5 +145,53 @@ public class UserController {
     public String edit(Model model) {
         model.addAttribute("methods", Node.METHODS_LIST);
         return "user/edit";
+    }
+
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVo password(UserUpdateDto dto, BindingResult br) {
+        ResultVo resultVo = new ResultVo();
+        userPasswordUpdateDtoValidator.validate(dto, br);
+        if (br.hasErrors()) {
+            resultVo.fail(br.getAllErrors().get(0).getDefaultMessage());
+            return resultVo;
+        }
+        User user = SecurityUtils.currentUser();
+        userPasswordUpdateDtoValidator.resetUser(user, dto);
+        userService.saveOrUpdate(user);
+        resultVo.success("操作成功");
+        return resultVo;
+    }
+
+    @RequestMapping(value = "/sspwd", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVo sspwd(UserUpdateDto dto, BindingResult br) {
+        ResultVo resultVo = new ResultVo();
+        ssPassUpdateDtoValidator.validate(dto, br);
+        if (br.hasErrors()) {
+            resultVo.fail(br.getAllErrors().get(0).getDefaultMessage());
+            return resultVo;
+        }
+        User user = SecurityUtils.currentUser();
+        ssPassUpdateDtoValidator.resetUser(user, dto);
+        userService.saveOrUpdate(user);
+        resultVo.success("操作成功");
+        return resultVo;
+    }
+
+    @RequestMapping(value = "/method", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultVo method(UserUpdateDto dto, BindingResult br) {
+        ResultVo resultVo = new ResultVo();
+        ssMethodUpdateDtoValidator.validate(dto, br);
+        if (br.hasErrors()) {
+            resultVo.fail(br.getAllErrors().get(0).getDefaultMessage());
+            return resultVo;
+        }
+        User user = SecurityUtils.currentUser();
+        ssMethodUpdateDtoValidator.resetUser(user, dto);
+        userService.saveOrUpdate(user);
+        resultVo.success("操作成功");
+        return resultVo;
     }
 }

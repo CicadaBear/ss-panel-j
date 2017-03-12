@@ -17,14 +17,14 @@ public class TimeCounterAspect {
 
     private long startTime;
 
-    @Before("execution(* cc.cicadabear.web.controller..*(..))")
+    @Before("execution(* cc.cicadabear.web.controller..*.*(..))")
     public void before() {
         startTime = System.currentTimeMillis();
         ThreadLocalHolder.getRequest().setAttribute("startTime", startTime);
         logger.debug("before timestamp" + startTime);
     }
 
-    @After("execution(* cc.cicadabear.web.controller..*(..))")
+    @After("execution(* cc.cicadabear.web.controller..*.*(..))")
     public void after() {
         long now = System.currentTimeMillis();
         logger.debug("after timestamp" + now);

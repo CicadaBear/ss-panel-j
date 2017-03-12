@@ -20,4 +20,6 @@ public interface NodeService {
 
     void deleteNode(int id);
 
+    void saveOrUpdate(Node node);
+
 }
