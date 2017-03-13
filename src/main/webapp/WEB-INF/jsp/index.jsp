@@ -55,7 +55,7 @@
                     <h5 class="center">Open Source</h5>
 
                     <p class="light">
-                        Totally free and open source. A worldwide community devoted to deliver bug-free error_code and
+                        Totally free and open source. A worldwide community devoted to deliver bug-free errorCode and
                         long-term support.
                     </p>
                 </div>

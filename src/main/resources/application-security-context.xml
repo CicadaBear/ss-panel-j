@@ -34,7 +34,7 @@
         <intercept-url pattern="/auth/login" access="permitAll"/>
         <intercept-url pattern="/auth/register" access="permitAll"/>
         <intercept-url pattern="/test/**" access="permitAll"/>
-        <intercept-url pattern="/api/**" access="permitAll"/>
+        <intercept-url pattern="/mu/**" access="permitAll"/>
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>

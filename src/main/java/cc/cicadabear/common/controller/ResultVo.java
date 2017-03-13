@@ -1,5 +1,7 @@
 package cc.cicadabear.common.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * rest接口返回数据对象
  */
@@ -11,7 +13,7 @@ public class ResultVo {
     /**
      * 结果代码
      */
-    private String error_code;
+    private String errorCode = "200";
     /**
      * 结果消息
      */
@@ -26,7 +28,7 @@ public class ResultVo {
 
     public ResultVo(int ret, String code, String msg, Object data) {
         super();
-        this.error_code = code;
+        this.errorCode = code;
         this.msg = msg;
         this.ret = ret;
         this.data = data;
@@ -36,24 +38,17 @@ public class ResultVo {
         super();
     }
 
-    public String getError_code() {
-        return error_code;
+    @JsonProperty("error_code")
+    public String getErrorCode() {
+        return errorCode;
     }
 
     public void setErrorCode(String errorCode) {
-        this.error_code = errorCode;
+        this.errorCode = errorCode;
     }
 
     public void setErrorCode(int errorCode) {
-        this.error_code = String.valueOf(errorCode);
-    }
-
-//    public String getErrorCode() {
-//        return this.error_code;
-//    }
-
-    public void setError_code(String error_code) {
-        this.error_code = error_code;
+        this.errorCode = String.valueOf(errorCode);
     }
 
     public String getMsg() {

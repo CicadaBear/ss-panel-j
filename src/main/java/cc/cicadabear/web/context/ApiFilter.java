@@ -30,8 +30,8 @@ public class ApiFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         logger.debug("start");
-        if (request.getRequestURI().contains("/api")) {
-            String key = (String) request.getAttribute("key");
+        if (request.getRequestURI().contains("/mu")) {
+            String key = request.getParameter("key");
             if (key != null && JConfig.getConfig("muKey").equals(key)) {
                 filterChain.doFilter(request, response);
             } else {

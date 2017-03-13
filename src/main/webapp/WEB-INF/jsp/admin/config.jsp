@@ -44,14 +44,14 @@
 
                             <div class="form-group">
                                 <label>统计代码</label>
-                                <textarea class="form-control" id="analytics-error_code" rows="3"
-                                          placeholder="Enter ...">{$conf['analytics-error_code']}</textarea>
+                                <textarea class="form-control" id="analytics-errorCode" rows="3"
+                                          placeholder="Enter ...">{$conf['analytics-errorCode']}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>邀请页公告</label>
-                                <textarea class="form-control" id="home-error_code" rows="3"
-                                          placeholder="Enter ...">{$conf['home-error_code']}</textarea>
+                                <textarea class="form-control" id="home-errorCode" rows="3"
+                                          placeholder="Enter ...">{$conf['home-errorCode']}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -104,8 +104,8 @@
                 url: "/admin/config",
                 dataType: "json",
                 data: {
-                    analyticsCode: $("#analytics-error_code").val(),
-                    homeCode: $("#home-error_code").val(),
+                    analyticsCode: $("#analytics-errorCode").val(),
+                    homeCode: $("#home-errorCode").val(),
                     appName: $("#app-name").val(),
                     userIndex: $("#user-index").val(),
                     userNode: $("#user-node").val()

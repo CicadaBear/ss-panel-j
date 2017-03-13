@@ -21,7 +21,7 @@ public interface Repository {
 
     <T extends AbstractEntity> void deleteAll(Collection<T> elements);
 
-    <T extends AbstractEntity> List<T> findAll(Class<T> clazz, boolean active);
+    <T extends AbstractEntity> List<T> findAll(Class<T> clazz);
 
 
 }

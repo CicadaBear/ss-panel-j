@@ -3,6 +3,9 @@ package cc.cicadabear.domain.entity;
 import cc.cicadabear.common.util.*;
 import cc.cicadabear.domain.repository.UserRepository;
 import cc.cicadabear.domain.shared.BeanProvider;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.annotations.*;
 import org.slf4j.Logger;
@@ -21,6 +24,10 @@ import java.util.List;
 @Table(name = "user", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
+@JsonIgnoreProperties({"user_repository", "username", "password",
+        "last_get_gift_time", "last_rest_pass_time", "gravatar",
+        "is_email_verify", "is_admin", "inviter_id",
+        "invite_codes", "invitees"})
 public class User extends AbstractEntity {
 
 
@@ -30,11 +37,21 @@ public class User extends AbstractEntity {
 
     private transient UserRepository userRepository = BeanProvider.getBean(UserRepository.class);
 
+    @JsonProperty("user_repository")
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Column(name = "user_name")
     private String username;
 
     @Column(name = "email", unique = true)
     private String email;
+
 
     @Column(name = "pass")
     private String pass;
@@ -89,6 +106,7 @@ public class User extends AbstractEntity {
 
     @Column(name = "is_admin")
     private int isAdmin;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ref_by", referencedColumnName = "id")
@@ -180,18 +198,7 @@ public class User extends AbstractEntity {
         return serialVersionUID;
     }
 
-    public static Logger getLOG() {
-        return LOG;
-    }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    @JsonProperty("username")
     public String getUsername() {
         return username;
     }
@@ -200,6 +207,7 @@ public class User extends AbstractEntity {
         this.username = username;
     }
 
+    @JsonProperty("email")
     public String getEmail() {
         return email;
     }
@@ -208,6 +216,7 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
+    @JsonProperty("password")
     public String getPassword() {
         return password;
     }
@@ -216,6 +225,7 @@ public class User extends AbstractEntity {
         this.password = password;
     }
 
+    @JsonProperty("t")
     public int getT() {
         return t;
     }
@@ -224,6 +234,7 @@ public class User extends AbstractEntity {
         this.t = t;
     }
 
+    @JsonProperty("u")
     public long getU() {
         return u;
     }
@@ -232,6 +243,7 @@ public class User extends AbstractEntity {
         this.u = u;
     }
 
+    @JsonProperty("d")
     public long getD() {
         return d;
     }
@@ -240,6 +252,7 @@ public class User extends AbstractEntity {
         this.d = d;
     }
 
+    @JsonProperty("transfer_enable")
     public long getTransferEnable() {
         return transferEnable;
     }
@@ -248,6 +261,7 @@ public class User extends AbstractEntity {
         this.transferEnable = transferEnable;
     }
 
+    @JsonProperty("port")
     public int getPort() {
         return port;
     }
@@ -256,6 +270,7 @@ public class User extends AbstractEntity {
         this.port = port;
     }
 
+    @JsonProperty("protocol")
     public String getProtocol() {
         return protocol;
     }
@@ -264,6 +279,7 @@ public class User extends AbstractEntity {
         this.protocol = protocol;
     }
 
+    @JsonProperty("obfs")
     public String getObfs() {
         return obfs;
     }
@@ -272,6 +288,7 @@ public class User extends AbstractEntity {
         this.obfs = obfs;
     }
 
+    @JsonProperty("switch")
     public int getSwitch() {
         return switch_;
     }
@@ -281,6 +298,7 @@ public class User extends AbstractEntity {
         this.switch_ = switch_ ? 1 : 0;
     }
 
+    @JsonProperty("enable")
     public int getEnable() {
         return enable;
     }
@@ -289,6 +307,7 @@ public class User extends AbstractEntity {
         this.enable = enable ? 1 : 0;
     }
 
+    @JsonProperty("type")
     public int getType() {
         return type;
     }
@@ -297,6 +316,8 @@ public class User extends AbstractEntity {
         this.type = type;
     }
 
+    //    @JsonProperty("last_get_gift_time")
+    @JsonIgnore
     public int getLastGetGiftTime() {
         return lastGetGiftTime;
     }
@@ -305,6 +326,7 @@ public class User extends AbstractEntity {
         this.lastGetGiftTime = lastGetGiftTime;
     }
 
+    @JsonProperty("last_check_in_time")
     public int getLastCheckInTime() {
         return lastCheckInTime;
     }
@@ -313,6 +335,8 @@ public class User extends AbstractEntity {
         this.lastCheckInTime = lastCheckInTime;
     }
 
+    //    @JsonProperty("last_rest_pass_time")
+    @JsonIgnore
     public int getLastRestPassTime() {
         return lastRestPassTime;
     }
@@ -321,6 +345,8 @@ public class User extends AbstractEntity {
         this.lastRestPassTime = lastRestPassTime;
     }
 
+    @JsonIgnore
+//    @JsonProperty("reg_date")
     public Date getRegDate() {
         return regDate;
     }
@@ -329,6 +355,7 @@ public class User extends AbstractEntity {
         this.regDate = regDate;
     }
 
+    @JsonProperty("invite_num")
     public int getInviteNum() {
         return inviteNum;
     }
@@ -341,10 +368,12 @@ public class User extends AbstractEntity {
         return isAdmin == 1;
     }
 
+    @JsonProperty("is_admin")
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin ? 1 : 0;
     }
 
+    @JsonIgnore
     public User getInviter() {
         try {
             if (inviter.id() == 0) {
@@ -356,6 +385,7 @@ public class User extends AbstractEntity {
         }
     }
 
+    @JsonProperty("inviter_id")
     public int getInviterId() {
         User inviter = getInviter();
         if (inviter == null) {
@@ -368,6 +398,7 @@ public class User extends AbstractEntity {
         this.inviter = inviter;
     }
 
+    @JsonProperty("expire_time")
     public int getExpireTime() {
         return expireTime;
     }
@@ -376,6 +407,7 @@ public class User extends AbstractEntity {
         this.expireTime = expireTime;
     }
 
+    @JsonProperty("method")
     public String getMethod() {
         return method;
     }
@@ -384,10 +416,12 @@ public class User extends AbstractEntity {
         this.method = method;
     }
 
+    @JsonProperty("is_email_verify")
     public int getIsEmailVerify() {
         return isEmailVerify;
     }
 
+    @JsonIgnore
     public boolean isEmailVerify() {
         return isEmailVerify == 1;
     }
@@ -396,6 +430,7 @@ public class User extends AbstractEntity {
         this.isEmailVerify = isEmailVerify ? 1 : 0;
     }
 
+    @JsonProperty("reg_ip")
     public String getRegIp() {
         return regIp;
     }
@@ -404,7 +439,7 @@ public class User extends AbstractEntity {
         this.regIp = regIp;
     }
 
-
+    @JsonProperty("invite_codes")
     public List<InviteCode> getInviteCodes() {
         return inviteCodes;
     }
@@ -413,6 +448,7 @@ public class User extends AbstractEntity {
         this.inviteCodes = inviteCodes;
     }
 
+    @JsonProperty("invitees")
     public List<User> getInvitees() {
         return invitees;
     }
@@ -425,6 +461,7 @@ public class User extends AbstractEntity {
         this.pass = pass;
     }
 
+    @JsonProperty("passwd")
     public String getPass() {
         return pass;
     }
@@ -472,10 +509,12 @@ public class User extends AbstractEntity {
         return DateUtils.toDateTime(lastCheckInTime);
     }
 
+    @JsonProperty("gravatar")
     public String getGravatar() {
         return "https://secure.gravatar.com/avatar/daf81b9574e052950c3336edcbee64b4";
     }
 
+    @JsonProperty("reg_date")
     public String getRegDateText() {
         return DateUtils.toDateTime(regDate);
     }

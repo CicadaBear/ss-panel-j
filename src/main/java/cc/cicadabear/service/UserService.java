@@ -4,6 +4,8 @@ import cc.cicadabear.domain.dto.user.*;
 import cc.cicadabear.domain.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 /**
  * @author Shengzhao Li
  */
@@ -30,5 +32,7 @@ public interface UserService extends UserDetailsService {
     void registerUser(UserRegisterDto registerDto);
 
     void authenticate(String username, String rawPassword) throws Exception;
+
+    List<User> loadAll();
 
 }

@@ -79,7 +79,7 @@
                         <p> 每${fnc:getConfig("checkinTime")}小时可以签到一次。</p>
 
                         <p>上次签到时间：
-                            <error_code>${user.lastCheckInTime()}</error_code>
+                            <errorCode>${user.lastCheckInTime()}</errorCode>
                         </p>
                         <%--{if $user->isAbleToCheckin() }--%>
                         <p id="checkin-btn">

@@ -40,7 +40,7 @@
         <ul id="nav-mobile" class="side-nav">
             <li><a href="/">首页</a></li>
             <li><a href="https://shadowsocks.org/en/download/clients.html">客户端下载</a></li>
-            <li><a href="/error_code">邀请码</a></li>
+            <li><a href="/errorCode">邀请码</a></li>
             <%--{if $user->isLogin}--%>
             <c:if test="${fnc:isLogin()}">
                 <li><a href="/user">用户中心</a></li>

@@ -36,7 +36,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <p>当前您可以生成
-                            <error_code>${user.inviteNum}</error_code>
+                            <errorCode>${user.inviteNum}</errorCode>
                             个邀请码。
                         </p>
                         <c:if test="${user.inviteNum>0}">

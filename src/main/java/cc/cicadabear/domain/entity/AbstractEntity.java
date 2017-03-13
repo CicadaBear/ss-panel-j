@@ -3,6 +3,7 @@ package cc.cicadabear.domain.entity;
 
 import cc.cicadabear.common.util.DateUtils;
 import cc.cicadabear.domain.shared.GuidGenerator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,6 +36,7 @@ public abstract class AbstractEntity implements Serializable {
         this.id = id;
     }
 
+    @JsonProperty("id")
     public int getId() {
         return id;
     }

@@ -22,7 +22,7 @@
             <div class="col-md-6">
                 <div class="box box-solid">
                     <div class="box-header">
-                        <i class="fa fa-error_code"></i>
+                        <i class="fa fa-errorCode"></i>
 
                         <h3 class="box-title">配置Json</h3>
                     </div>
@@ -35,7 +35,7 @@
                 <!-- /.box -->
                 <div class="box box-solid">
                     <div class="box-header">
-                        <i class="fa fa-error_code"></i>
+                        <i class="fa fa-errorCode"></i>
 
                         <h3 class="box-title">配置地址</h3>
                     </div>

@@ -16,6 +16,17 @@
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
 
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="jacksonObjectMapper"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="jacksonObjectMapper" class="cc.cicadabear.web.context.JacksonObjectMapper"/>
 
     <!--static resource-->
     <mvc:resources mapping="/resources/**" location="/resources/"/>

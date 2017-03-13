@@ -27,6 +27,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -162,6 +163,15 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @Override
+    public List<User> loadAll() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("startIndex", 0);
+        map.put("perPageSize", 10);
+        return userRepository.findListUsers(map);
+//        return userRepository.findAll(User.class);
     }
 
 

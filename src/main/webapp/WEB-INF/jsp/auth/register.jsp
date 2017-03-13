@@ -133,7 +133,7 @@
             register();
         });
         $("#sendcode").on("click", function () {
-            var count = sessionStorage.getItem('email-error_code-count') || 0;
+            var count = sessionStorage.getItem('email-errorCode-count') || 0;
             var email = $("#email").val();
             var timer, countdown = 60, $btn = $(this);
             if (count > 3 || timer) return false;

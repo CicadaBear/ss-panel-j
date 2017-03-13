@@ -106,7 +106,7 @@ public abstract class AbstractRepositoryHibernate<T> implements Repository, Init
     }
 
     @Override
-    public <T extends AbstractEntity> List<T> findAll(Class<T> clazz, boolean active) {
+    public <T extends AbstractEntity> List<T> findAll(Class<T> clazz) {
         return find("from " + clazz.getName() + " c ");
     }
 }
