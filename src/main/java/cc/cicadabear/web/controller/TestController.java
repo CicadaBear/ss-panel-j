@@ -60,6 +60,7 @@ public class TestController {
 
         stream.println(user == null);
         stream.println(user.email());
+        stream.println(hashCode());
 
 //            Session session = sessionFactory.getCurrentSession();
 //            Session session = ThreadLocalHolder.getSession();

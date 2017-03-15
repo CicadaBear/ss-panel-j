@@ -22,3 +22,5 @@
 log/
 target/
 out/
+
+*.txt
