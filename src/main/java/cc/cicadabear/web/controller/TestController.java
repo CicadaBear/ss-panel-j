@@ -97,7 +97,11 @@ public class TestController {
 //        stream.println(userListDto.getUserList().toString());
 //        stream.println(userListDto.render());
 //        stream.println(ThreadLocalHolder.getRequest().getRequestURI());
-        userService.deleteUser(15);
+//        userService.deleteUser(15);
+
+        stream.println(JConfig.getConfig("paging.banner.first"));
+
+
         stream.flush();
 
 
@@ -110,7 +114,6 @@ public class TestController {
 //        System.out.println("==================" + ThreadLocalHolder.getSession().getClass());
 //        user.setUsername("admin12346");
 //        userService.saveOrUpdate(user);
-
 
         return "test";
     }

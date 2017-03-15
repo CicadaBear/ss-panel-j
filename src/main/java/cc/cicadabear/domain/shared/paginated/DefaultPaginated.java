@@ -226,12 +226,7 @@ public class DefaultPaginated<T> implements Paginated<T>, PaginatedList {
         }
         renderHtml += getLastHtml();
 //        return renderHtml;
-        try {
-            return new String(parseContainerHtml(renderHtml).getBytes(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return "error";
+        return parseContainerHtml(renderHtml);
     }
 
     private String getLinksHtml() {
